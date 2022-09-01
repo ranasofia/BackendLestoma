@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend para el aplicativo web del laboratorio LESTOMA",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir build",
@@ -9,7 +9,7 @@
     "start": "node build/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sofia Lopera, Sebastian Naranjo",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
