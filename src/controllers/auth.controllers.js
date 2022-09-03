@@ -10,7 +10,7 @@ export const registre = async (req, res) => {
         name,
         lastname,
         email,
-        password: await User.encriptPass(password)
+        password,
     });
 
     if (roles){
@@ -34,7 +34,7 @@ export const registre = async (req, res) => {
 
 export const signin = async (req, res) => {
 
-    const userFound = await User.findOne({email: req.body.email}).populate("roles")
+    const userFound = await User.findOne({email: req.body.email}).populate("roles");
     console.log(userFound)
     
     if (!userFound) return res.status(400).json({message:'Usuario no encontrado'})
