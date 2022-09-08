@@ -24,7 +24,7 @@ export const registre = async (req, res) => {
     const saveUser = await newUser.save();
     console.log(saveUser)
 
-    const token = jwt.sign({id: saveUser._id},config.SECRET,{
+    const token = jwt.sign({name: saveUser.name, lastname: saveUser.lastname, email: saveUser.email, rol: saveUser.roles},config.SECRET,{
         expiresIn: 86400 //1 day
     })
 
@@ -43,12 +43,11 @@ export const signin = async (req, res) => {
 
     if (!matchPassword) return res.status(401).json({token: null, message: 'Contraseña incorrecta'})
     
-    const token = jwt.sign({id: userFound._id}, config.SECRET,{
+    const token = jwt.sign({name: userFound.name, lastname: userFound.lastname, email: userFound.email, rol: userFound.roles}, config.SECRET,{
         expiresIn: 86400
     })
 
     res.json({token})
-
 
     
 }

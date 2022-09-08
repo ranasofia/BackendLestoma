@@ -20,13 +20,13 @@ app.use(function(req, res, next) {
 app.use(express.json())
 app.use(morgan('dev'));
 
-app.get('/',(req,res) =>{
-    res.json({
-        author: app.get('pkg').author,
-        description: app.get('pkg').description,
-        version: app.set('pkg').version
-    })
-})
+//app.get('/',(req,res) =>{
+  //  res.json({
+    //    author: app.get('pkg').author,
+      //  description: app.get('pkg').description,
+       // version: app.set('pkg').version
+   // })
+//})
 
 app.use('/api/auth', authRoutes);
 
