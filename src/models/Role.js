@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose'
 
 const roleSchema = new Schema(
     {
-        name: String,
+        id_rol: String,
     },
     {
         versionKey: false,

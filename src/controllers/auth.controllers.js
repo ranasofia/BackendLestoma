@@ -14,11 +14,11 @@ export const registre = async (req, res) => {
     });
 
     if (roles){
-        const foundRoles = await Role.find({name: {$in: roles}})
+        const foundRoles = await Role.find({id_rol: {$in: roles}})
         newUser.roles = foundRoles.map(role => role._id)
     
     }else {
-        const role = await Role.findOne({name: 'user'})
+        const role = await Role.findOne({id_rol: 'user'})
         newUser.roles = [role._id];
     }
     const saveUser = await newUser.save();
