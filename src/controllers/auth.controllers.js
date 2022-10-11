@@ -17,8 +17,12 @@ export const registre = async (req, res) => {
         const foundRoles = await Role.find({id_rol: {$in: roles}})
         newUser.roles = foundRoles.map(role => role._id)
     
-    }else {
-        const role = await Role.findOne({id_rol: 'user'})
+    } else {
+        const role = await Role.findOne({id_rol: 3})
+/*         await Role.findOne({id_rol: 3}, function callback(error, role){
+            console.log('Este es el error del id nulo: ', error)
+            newUser.roles = [role._id];
+        }) */
         newUser.roles = [role._id];
     }
     const saveUser = await newUser.save();
