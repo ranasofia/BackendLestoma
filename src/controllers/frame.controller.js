@@ -1,35 +1,33 @@
+import EstacionM from '../models/EstacionM';
 import Frame from '../models/Frame'
+import jwt from 'jsonwebtoken'
+import config from '../config'
 
+export const createFrame = async (req, res) => {
 
-export const createFrame = async (req,res) =>{
-    const {typeCom, dirSlave, functionFrame, dirReg, datosTxAll, datosRxAll, sens1, sens2,
-    sens3,sens4,sens5,sens6,sens7,sens8,sens9,sens10,crc,user,upa,date} = req.body
+    const newFrame = await Frame.create(req.body)
+    res.json(await Frame.find({}))
+    console.log(newFrame)
 
-    const newFrame = new Frame({typeCom, dirSlave, functionFrame, dirReg, datosTxAll, 
-    datosRxAll, sens1, sens2, sens3,sens4,sens5,sens6,sens7,sens8,sens9,sens10,crc,
-    user,upa,date});
-
-    const savedFrame = await newFrame.save()
-    
-    res.status(201).json(savedFrame)
 }
 
-export const getFrame = async (req,res) =>{
-   
-    const frames = await Frame.find();
+export const getFrame = async (req, res) => {
+
+    const frame = Frame.find({})
+    console.log(frame)
     res.json(frames)
-    
-}
-
-export const getFrameById = (req,res) =>{
 
 }
 
-
-export const updateFrame = (req,res) =>{
+export const getFrameById = (req, res) => {
 
 }
 
-export const deleteFrame = (req,res) =>{
+
+export const updateFrame = (req, res) => {
+
+}
+
+export const deleteFrame = (req, res) => {
 
 }

@@ -4,9 +4,11 @@ const router = Router()
  
 import * as frameCtrl from '../controllers/frame.controller'
 
-router.post('/', frameCtrl.createFrame)
+router.post('/createFrame', frameCtrl.createFrame)
 
-router.get('/', frameCtrl.getFrame)
+//router.post('/createEst', frameCtrl.createEsta)
+
+router.get('/getFrame', frameCtrl.getFrame)
 
 router.get('/:frameId', frameCtrl.getFrameById)
 

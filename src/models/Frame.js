@@ -1,88 +1,76 @@
-import {Schema,model} from 'mongoose'
+import mongoose, { Schema, model } from 'mongoose'
 
-const frameSchema = new Schema({
-    typeCom: {
-        type: Boolean,
-        required: true
-    },
-    dirSlave: {
-        type: Number,
-        required: true,
-    },
-    functionFrame: {
-        type: String,
+const plantasGrabaSchema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Humedad: Number
+})
+const plantasRaizSchema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Humedad: Number
+})
+const plantasNFTSchema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Humedad: Number
+})
+const tanque4Schema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Conductividad_Electrica: Number,
+    Nivel_Agua: Number,
+    Turbidez: Number,
+    Oxigeno_Disuelto: Number
+})
+const tanque3Schema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Conductividad_Electrica: Number,
+    Nivel_Agua: Number,
+    Turbidez: Number,
+    Oxigeno_Disuelto: Number
+})
+const tanque2Schema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Conductividad_Electrica: Number,
+    Nivel_Agua: Number,
+    Turbidez: Number,
+    Oxigeno_Disuelto: Number
+})
+const tanque1Schema = new mongoose.Schema({
+    PH: Number,
+    Temperatura: Number,
+    Conductividad_Electrica: Number,
+    Nivel_Agua: Number,
+    Turbidez: Number,
+    Oxigeno_Disuelto: Number
+})
+const estationSchema = new mongoose.Schema({
 
-    },
-    dirReg: {
-        type: Number,
-        required: true
-    },
-
-    datosTxAll: {
-        type: String,
-        required: true
-    },
-    datosRxAll: {
-        type: String,
-        required: true
-    },
-
-    sens1: {
-        type: Number,
-        required: true
-    },
-    sens2: {
-        type: Number,
-        required: true
-    },
-    sens3: {
-        type: Number,
-        required: true
-    },
-    sens4: {
-        type: Number,
-        required: true
-    },
-    sens5: {
-        type: Number,
-        required: true
-    },
-    sens6: {
-        type: Number,
-        required: true
-    },
-    sens7: {
-        type: Number,
-        required: true
-    },
-    sens8: {
-        type: Number,
-        required: true
-    },
-    sens9: {
-        type: Number,
-        required: true
-    },
-    sens10: {
-        type: Number,
-        required: true
-    },
-    crc: {
-        type: Number,
-        required: true
-    },
-    user: {
-        type: String,
-        required: true
-    },
-    upa: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        required: true
-    }
+    Temperatura: String,
+    Humedad: String,
+    Velocidad_Viento: Number() ,
+    Dir_Viento:  Number() ,
+    Lluvia: Number() 
 });
 
-export default model('Frame', frameSchema);
+const frameSchema = new mongoose.Schema({
+    Type_Com: Boolean,
+    Dir_Esclavo: Number,
+    Funtion: String,
+    Dire_Registro: Number,
+    Estacion_Meteorologica: estationSchema,
+    Tanque_1: tanque1Schema,
+    Tanque_2: tanque2Schema,
+    Tanque_3: tanque3Schema,
+    Tanque_4: tanque4Schema,
+    PLantas_NFT: plantasNFTSchema,
+    PLantas_Raiz: plantasRaizSchema,
+    Plantas_Graba: plantasGrabaSchema,
+    CRC: Number
+});
+
+const Frame = model("Frame", frameSchema);
+module.exports = Frame
