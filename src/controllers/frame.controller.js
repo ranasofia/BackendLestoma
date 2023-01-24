@@ -1,4 +1,3 @@
-import EstacionM from '../models/EstacionM';
 import Frame from '../models/Frame'
 import jwt from 'jsonwebtoken'
 import config from '../config'

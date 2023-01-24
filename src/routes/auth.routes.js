@@ -9,4 +9,6 @@ router.post('/signin', authCtrl.signin)
 
 router.get('/getAll', authCtrl.getUsers)
 
+router.get('/getUser/:userId', authCtrl.getUserById)
+
 export default router;

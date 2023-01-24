@@ -51,9 +51,41 @@ export const signin = async (req, res) => {
 
 }
 
+/* exports.getUsers = async (req, res) => {
+
+    await User.find()
+    .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
+    .exec((err, users) => {
+      if (err) {
+        res.status(500).send({ message: error.message });
+      } else {
+        res.status(200).send({
+          result: users,
+        });
+      }
+    })
+
+
+    
+} */
+
 export const getUsers = async (req, res) => {
 
-    const users = await User.find();
-    res.json(users)
+    const users = await User.find()
+    .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
+    .exec((err, users) => {
+        res.json(users);
+    })
+
+
     
+}
+
+export const getUserById = async (req, res) => {
+    
+    const { userId } = req.params;
+
+    const users = await User.findById(userId);
+    res.status(200).json(users);
+
 }

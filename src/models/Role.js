@@ -5,6 +5,7 @@ const roleSchema = new Schema(
     {
         /* Para que sea requerido este campo: id_rol: Joi.number().required(), */
         id_rol: Joi.number(),
+        name_rol: String,
     },
     {
         versionKey: false,

@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
     lastname: { type: String, required: true },
     email: { type: String, unique: true },
     password: { type: String, required: true },
-    roles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-    ],},
+    roles: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
+},
     {
         timestamps: true,
         versionKey: false,
