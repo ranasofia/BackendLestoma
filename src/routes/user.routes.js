@@ -2,9 +2,9 @@ import { Router } from "express";
 const router = Router();
 
 import * as usersCtrl from "../controllers/user.controller";
-import { authJwt, verifySignup } from "../middlewares";
+/* import { authJwt, verifySignup } from "../middlewares"; */
 
-router.post(
+/* router.post(
   "/",
   [
     authJwt.verifyToken,
@@ -12,8 +12,12 @@ router.post(
     verifySignup.checkDuplicateUsernameOrEmail,
   ],
   usersCtrl.createUser
-);
+); */
 
-router.get("/", usersCtrl.getProducts);
+router.get("/getAll", usersCtrl.getUsers);
+
+router.get("/getUser/:userId", usersCtrl.getUserById);
+
+router.put("/putUser/:userId", usersCtrl.updateUserById);
 
 export default router;

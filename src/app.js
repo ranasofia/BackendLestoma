@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import authRoutes from './routes/auth.routes'
 import frameRoutes from './routes/frame.routes'
 import upaRoutes from './routes/upa.routes'
+import userRoutes from './routes/user.routes'
 import {createRoles} from './libs/inicialSetUp';
 
 const app = express()
@@ -30,8 +31,10 @@ app.use(morgan('dev'));
 
 app.use('/api/auth', authRoutes);
 
+app.use('/api/users', userRoutes);
+
 app.use('/frame', frameRoutes);
 
-app.use('/upa', upaRoutes);
+app.use('/api/upa', upaRoutes);
 
 export default app;
