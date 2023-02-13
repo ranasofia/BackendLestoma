@@ -14,8 +14,8 @@ export const createUPA = async (req, res) => {
 
 export const getUPAS = async (req, res) => {
 
-    const upas = await Upa.find();
-    res.json(upas)
+    const upas = await Upa.find({});
+    res.json(upas);
      
 }
 

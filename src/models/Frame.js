@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose'
-
+/*
 const plantasGrabaSchema = new mongoose.Schema({
     PH: Number,
     Temperatura: Number,
@@ -38,8 +38,8 @@ const tanque2Schema = new mongoose.Schema({
     Nivel_Agua: Number,
     Turbidez: Number,
     Oxigeno_Disuelto: Number
-})
-const tanque1Schema = new mongoose.Schema({
+}) */
+const datosSchema = new mongoose.Schema({
     PH: Number,
     Temperatura: Number,
     Conductividad_Electrica: Number,
@@ -49,6 +49,7 @@ const tanque1Schema = new mongoose.Schema({
 })
 const estationSchema = new mongoose.Schema({
 
+    NombreUpa: String,
     Temperatura: String,
     Humedad: String,
     Velocidad_Viento: Number() ,
@@ -57,18 +58,19 @@ const estationSchema = new mongoose.Schema({
 });
 
 const frameSchema = new mongoose.Schema({
+    NombreUpa: String,
     Type_Com: Boolean,
     Dir_Esclavo: Number,
     Funtion: String,
     Dire_Registro: Number,
     Estacion_Meteorologica: estationSchema,
-    Tanque_1: tanque1Schema,
-    Tanque_2: tanque2Schema,
-    Tanque_3: tanque3Schema,
-    Tanque_4: tanque4Schema,
-    PLantas_NFT: plantasNFTSchema,
-    PLantas_Raiz: plantasRaizSchema,
-    Plantas_Graba: plantasGrabaSchema,
+    Datos: datosSchema,
+    /*Tanque_2: tanque2Schema,
+    //Tanque_3: tanque3Schema,
+    //Tanque_4: tanque4Schema,
+    //PLantas_NFT: plantasNFTSchema,
+    //PLantas_Raiz: plantasRaizSchema,
+    //Plantas_Graba: plantasGrabaSchema, */
     CRC: Number
 });
 
