@@ -5,9 +5,10 @@ import frameRoutes from './routes/frame.routes'
 import upaRoutes from './routes/upa.routes'
 import userRoutes from './routes/user.routes'
 import {createRoles} from './libs/inicialSetUp';
+import { createUPAs } from './libs/inicialSetUpUpa'
 
 const app = express()
-
+createUPAs();
 createRoles();
 
 app.use(function(req, res, next) {
@@ -36,5 +37,6 @@ app.use('/api/users', userRoutes);
 app.use('/frame', frameRoutes);
 
 app.use('/api/upa', upaRoutes);
+
 
 export default app;

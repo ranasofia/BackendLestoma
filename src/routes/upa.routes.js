@@ -5,7 +5,7 @@ import * as upaCtrl from '../controllers/upa.controller'
 
 router.post('/', upaCtrl.createUPA)
 
-router.get('/', upaCtrl.getUPAS)
+router.get('/getupa', upaCtrl.getUPAS)
 
 router.get('/:upaId', upaCtrl.getUPAbyId)
 
