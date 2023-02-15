@@ -10,9 +10,8 @@ export const createFrame = async (req, res) => {
 }
 export const getFrame = async (req, res) => {
 
-    const frame = Frame.find({})
-    console.log(frame)
-    res.json(frames)
+    const frames = await Frame.find({});
+    res.json(frames);
 
 }
 

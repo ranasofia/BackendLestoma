@@ -1,21 +1,28 @@
 import Upa from '../models/Upa';
+import Location from '../models/Location';
 
-export const createUPAs = async () => {
-
+export const createInitialData = async () => {
   try {
-    const count = await Upa.estimatedDocumentCount()
+    const countUpa = await Upa.estimatedDocumentCount();
+    const countLocation = await Location.estimatedDocumentCount();
 
-    if (count > 0) return;
- 
-    const values = await Promise.all([
-     new Upa({name: 'Vergel', location: 'Facatativa'}).save(),
-     new Upa({name: 'Lestoma', location: 'Mosquera'}).save(),
-    ])
- 
-    console.log(values);
-    
+    if (countUpa > 0 || countLocation > 0) {
+      return;
+    }
+
+    const locations = await Location.create([
+      { name: 'Mosquera' },
+      { name: 'Facatativa' },
+    ]);
+
+    const upas = await Upa.create([
+      { name: 'El vergel', location: locations[0]._id },
+      { name: 'Lestoma', location: locations[1]._id },
+    ]);
+
+    console.log('Initial data created successfully');
   } catch (error) {
-    console.log(error);
-    
+    console.error(`Error creating initial data: ${error.message}`);
   }
-}
+};
+

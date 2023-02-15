@@ -1,16 +1,15 @@
 import { Schema, model } from 'mongoose'
+const mongoose = require('mongoose');
 
-const upaSchema = new Schema(
+const upaSchema = new mongoose.Schema(
     {
-        name: String,
-    },
-    {
-        location: String,
+        name: {type:String},
+        location: { type: mongoose.Schema.Types.ObjectId, ref: "Location"}
     },
     {
         versionKey: false,
     }
 );
 
+export default mongoose.model('Upa',upaSchema);
 
-export default model("Upa", upaSchema);
