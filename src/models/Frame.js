@@ -72,6 +72,9 @@ const frameSchema = new mongoose.Schema({
     //PLantas_Raiz: plantasRaizSchema,
     //Plantas_Graba: plantasGrabaSchema, */
     CRC: Number
+},
+{
+    timestamps: true
 });
 
 const Frame = model("Frame", frameSchema);
