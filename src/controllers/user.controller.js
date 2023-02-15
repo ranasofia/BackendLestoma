@@ -6,7 +6,7 @@ export const getUsers = async (req, res) => {
     const users = await User.find()
     .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
     .exec((err, users) => {
-        res.json({users});
+        res.json(users);
     })
 
 }
