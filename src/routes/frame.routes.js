@@ -8,7 +8,7 @@ router.post('/createFrame', frameCtrl.createFrame)
 
 //router.post('/createEst', frameCtrl.createEsta)
 
-router.get('/getFrame', frameCtrl.getFrame)
+router.get('/getAll', frameCtrl.getFrame)
 
 router.get('/:frameId', frameCtrl.getFrameById)
 

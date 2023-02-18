@@ -1,6 +1,4 @@
 import Frame from '../models/Frame'
-import jwt from 'jsonwebtoken'
-import config from '../config'
 
 export const createFrame = async (req, res) => {
 
