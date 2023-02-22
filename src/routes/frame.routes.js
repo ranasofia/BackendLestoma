@@ -10,6 +10,8 @@ router.post('/createFrame', frameCtrl.createFrame)
 
 router.get('/getAll', frameCtrl.getFrame)
 
+router.get('/getReport', frameCtrl.getReport)
+
 router.get('/:frameId', frameCtrl.getFrameById)
 
 router.put('/:frameId', frameCtrl.updateFrame)
