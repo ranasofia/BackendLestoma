@@ -3,11 +3,11 @@ const router = Router();
 
 import * as upaCtrl from '../controllers/upa.controller'
 
-router.post('/', upaCtrl.createUPA)
+router.post('/createUpa', upaCtrl.createUPA)
 
 router.get('/getupa', upaCtrl.getUPAS)
 
-router.get('/:upaId', upaCtrl.getUPAbyId)
+router.get('/:upaId', upaCtrl.getUpaById)
 
 router.put('/:upaId', upaCtrl.editUPA)
 

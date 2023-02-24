@@ -3,7 +3,8 @@ import Frame from '../models/Frame'
 const faker = require('faker');
 const mongoose = require('mongoose');
 const PDF = require('pdfkit-construct') 
-const fs = require('fs');
+
+
 
 
 exports.createData = async (req, res) => {
@@ -33,11 +34,8 @@ exports.createData = async (req, res) => {
   });
 
   const CreatedFrame = await newFrame.save();
-
-
      res.status(201).json(CreatedFrame);
   } ;
-
 
 
 export const createFrame = async (req, res) => {
@@ -54,7 +52,9 @@ export const getFrame = async (req, res) => {
 
 }
 
-export const getFrameById = (req, res) => {
+export const getFrameById = async (req, res) => {
+
+ 
 
 }
 

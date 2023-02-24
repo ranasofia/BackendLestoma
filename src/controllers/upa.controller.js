@@ -19,48 +19,20 @@ export const getUPAS = async (req, res) => {
          res.json(upas);
     }) 
 }
-/*
-export const getUsers = async (req, res) => {
-
-    const users = await User.find()
-    .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
-    .exec((err, users) => {
-        res.json({users});
-    })
-
-
-
-
-
-
-
-export const getUPAS = async (req, res) => {
-    try {
-        const upas = await Upa.aggregate([
-          {
-            $lookup: {
-              from: 'locations',
-              localField: 'location',
-              foreignField: '_id',
-              as: 'location_info'
-            }
-          }
-        ]);
-        res.json(upas);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
+export const getUpaById = async (req, res, next) => {
+  const upaId = req.params.upaId;
+  try {
+    const upa = await Upa.findById(upaId).exec();
+    if (!upa) {
+      return res.status(404).json({ message: 'No se encontró ninguna UPA con el ID proporcionado' });
+    }
+    res.json(upa);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Algo salió mal al buscar la UPA' });
+  }
 }
-*/
 
-export const getUPAbyId = async (req, res) => {
-    
-    const { upaId } = req.params;
-
-    const upa = await Upa.findById(upaId);
-    res.status(200).json(upa);
-
-}
 
 export const editUPA = (req, res) => {
     
