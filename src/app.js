@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.routes'
 import frameRoutes from './routes/frame.routes'
 import upaRoutes from './routes/upa.routes'
 import userRoutes from './routes/user.routes'
+import dataRoutes from './routes/data.routes'
 import {createRoles} from './libs/inicialSetUp';
 import { createInitialData} from './libs/inicialSetUpUpa'
 
@@ -37,6 +38,7 @@ app.use('/api/users', userRoutes);
 app.use('/frame', frameRoutes);
 
 app.use('/api/upa', upaRoutes);
+
 
 
 export default app;
