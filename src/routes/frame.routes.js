@@ -12,6 +12,10 @@ router.get('/getAll', frameCtrl.getFrame)
 
 router.get('/getReport', frameCtrl.getReport)
 
+router.get('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)
+
+router.get('/getCRC', frameCtrl.getCRC)
+
 router.get('/:frameId', frameCtrl.getFrameById)
 
 router.put('/:frameId', frameCtrl.updateFrame)
