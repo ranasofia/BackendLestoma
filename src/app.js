@@ -35,7 +35,7 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api/users', userRoutes);
 
-app.use('/frame', frameRoutes);
+app.use('/api/frame', frameRoutes);
 
 app.use('/api/upa', upaRoutes);
 

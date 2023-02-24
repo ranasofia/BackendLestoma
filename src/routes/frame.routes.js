@@ -10,7 +10,13 @@ router.post('/obtener', frameCtrl.createData);
 
 //router.post('/createEst', frameCtrl.createEsta)
 
-router.get('/getFrame', frameCtrl.getFrame)
+router.get('/getAll', frameCtrl.getFrame)
+
+router.get('/getReport', frameCtrl.getReport)
+
+router.get('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)
+
+router.get('/getCRC', frameCtrl.getCRC)
 
 router.get('/:frameId', frameCtrl.getFrameById)
 

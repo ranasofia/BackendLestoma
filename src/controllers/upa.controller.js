@@ -16,7 +16,7 @@ export const getUPAS = async (req, res) => {
 
     const upas = await Upa.find().populate({ path: "location", model: "Location", select: "name"})
     .exec((err,upas) => {
-         res.json({upas});
+         res.json(upas);
     }) 
 }
 /*
