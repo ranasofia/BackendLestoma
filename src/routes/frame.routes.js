@@ -10,7 +10,7 @@ router.post('/createFrame', frameCtrl.createFrame)
 
 router.get('/getAll', frameCtrl.getFrame)
 
-router.get('/getReport', frameCtrl.getReport)
+router.post('/getReport', frameCtrl.getReport)
 
 router.get('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)
 

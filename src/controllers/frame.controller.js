@@ -1,4 +1,3 @@
-import { models } from 'mongoose';
 import Frame from '../models/Frame'
 const PDF = require('pdfkit-construct') 
 const fs = require('fs');
