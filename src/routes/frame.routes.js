@@ -4,7 +4,9 @@ const router = Router()
  
 import * as frameCtrl from '../controllers/frame.controller'
 
-router.post('/createFrame', frameCtrl.createFrame)
+router.post('/createFrame', frameCtrl.createFrame);
+
+router.post('/obtener', frameCtrl.createData);
 
 //router.post('/createEst', frameCtrl.createEsta)
 

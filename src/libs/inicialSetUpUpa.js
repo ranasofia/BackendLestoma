@@ -9,12 +9,10 @@ export const createInitialData = async () => {
     if (countUpa > 0 || countLocation > 0) {
       return;
     }
-
     const locations = await Location.create([
       { name: 'Mosquera' },
       { name: 'Facatativa' },
     ]);
-
     const upas = await Upa.create([
       { name: 'El vergel', location: locations[0]._id },
       { name: 'Lestoma', location: locations[1]._id },
