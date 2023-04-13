@@ -98,7 +98,7 @@ export const getFrame_DateVariables = async (req, res, next) => {
     });
 };
 
-export const getReport = async (req, res) => {
+export const getReport = async (req, res, next) => {
     const { fechaInicio, fechaFin, variables } = req.body;
 
     // Crea un objeto de selección vacío
@@ -119,13 +119,14 @@ export const getReport = async (req, res) => {
             $lte: fechaFin
         }
     })
-    .select(seleccion).lean() // Aplica la selección al resultado de la consulta
+    .select(seleccion) // Aplica la selección al resultado de la consulta
     .exec((err, datos) => {
         if (err) {
             return next(err);
         }
 
         const datosTabla = datos;
+
 
         if (!datosTabla) {
             return res.status(404).send("No se encontraron datos");
@@ -154,7 +155,7 @@ export const getReport = async (req, res) => {
             { key: 'Fecha', label: 'Fecha', align: 'left'}
         ];
 
-        if (variables) {
+        if (variables && variables.length > 0) {
             variables.forEach(variable => {
                 columns.push({
                     key: variable,
@@ -164,23 +165,60 @@ export const getReport = async (req, res) => {
             });
         }
 
-        doc.setDocumentHeader({}, () => {
-            doc.text('REPORTE', {
-                width:420,
-                align: 'center'
-            });
+        // Obtener la fecha actual
+        const fechaActual = new Date();
+
+        // Formatear la fecha como una cadena de texto
+        const fechaActualTexto = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
+
+        // Agregar la fecha al documento
+        doc.font('Helvetica').text(`Fecha del reporte: ${fechaActualTexto}`, {
+            align: 'right'
         });
 
-        doc.addTable(columns, rows, {
-            border: null,
-            width: "fill_body",
-            striped: true,
-            stripedColors: ["#f6f6f6", "#d6c4dd"],
-            cellsPadding: 10,
-            marginLeft: 45,
-            marginRight: 45,
-            headAlign: 'center'
+        doc.moveDown();
+
+        // Agregar logo en la parte superior izquierda
+        doc.image('src/assets/images/icon_fish.png', 50, 50, { width: 50 });
+
+        // Mover el cursor a la posición siguiente
+        doc.moveDown();
+
+        doc.font('Helvetica-Bold').text('REPORTE DE VARIABLES', {
+            align: 'center'
         });
+
+        doc.moveDown();
+
+        doc.font('Helvetica').text('LABORATORIO EXPERIMENTAL DE SISTEMAS TECNOLOGICOS ORIENTADOS A MODELOS ACUAPONICOS (LESTOMA)', {
+            align: 'center'
+        });
+
+        doc.moveDown();
+
+        doc.font('Helvetica').text(`En la siguiente tabla se evidencia el valor de las variables seleccionadas (${variables.join(', ')}) en el rango de fechas establecido (${fechaInicio} - ${fechaFin})`, {
+            align: 'justify'
+        });
+
+        doc.moveDown();
+        
+        doc.translate(0, 220); // Ajusta la posición de la tabla
+
+        const numColumns = columns.length;
+        const columnWidth = (doc.page.width - 20) / numColumns;
+
+        const tableOptions = {
+            width: doc.page.width,
+            margin: { top: 50, right: 50, bottom: 50, left: 50 },
+            align: 'center'
+        };
+
+        // set column width dynamically based on page width
+        columns.forEach(column => {
+        column.width = columnWidth;
+        });
+
+        doc.addTable(columns, rows, tableOptions);
 
         doc.render();
         const buffers = [];

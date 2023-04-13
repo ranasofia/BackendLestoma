@@ -14,7 +14,7 @@ router.get('/getAll', frameCtrl.getFrame)
 
 router.post('/getReport', frameCtrl.getReport)
 
-router.get('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)
+router.post('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)
 
 router.get('/getCRC', frameCtrl.getCRC)
 
@@ -22,6 +22,6 @@ router.get('/:frameId', frameCtrl.getFrameById)
 
 router.put('/:frameId', frameCtrl.updateFrame)
 
-router.delete('/:frameId', frameCtrl.deleteFrame)
+router.delete('/deleteFrame', frameCtrl.deleteFrame)
 
 export default router;
