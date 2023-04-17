@@ -53,8 +53,6 @@ export const getFrame = async (req, res) => {
 
 export const getFrameById = async (req, res) => {
 
- 
-
 }
 
 
@@ -234,12 +232,46 @@ export const getReport = async (req, res, next) => {
 };
 
 export const getCRC = async (req, res) => {
+
     const crc = require('crc');
 
-    const hex = '35';
-    const buffer = Buffer.from(hex, 'hex');
+    const lastFrame = await Frame.findOne({}).sort({ _id: -1 });
 
-    const result = crc.crc16modbus(buffer);
+    console.log(lastFrame);
 
-    console.log(`Resultado: 0x${result.toString(16).toUpperCase()}`);
+    const {PH, Temperatura, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = lastFrame.Datos;
+    const data = `${PH}${Temperatura}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}`;
+    // const data = PH.concat(Temperatura, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto);
+    const crc16modbus = crc.crc16modbus(Buffer.from(data));
+    const result = crc16modbus.toString(16).toUpperCase();
+    //const result2 = parseInt(result, 16);
+
+    console.log(result); // imprime el resultado en hexadecimal
+    console.log(data);
+    res.json(result);
+
+    const updatedFrame = await Frame.findByIdAndUpdate(lastFrame._id, { CRC: result  }, { new: true });
+    console.log(updatedFrame);
+
+}
+
+export const getLast = async (req, res) => {
+    try {
+        const lastRecord = await Frame.findOne({}).sort({ _id: -1 });
+        res.json(lastRecord);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateData = async (req, res, next) => {
+    
+    try {
+        const lastFrame = await Frame.findOne().sort({ $natural: -1 }); // buscar el último registro
+        const updatedFrame = await Frame.findByIdAndUpdate(lastFrame._id, req.body, { new: true }); // actualizar el registro encontrado con los datos del cuerpo de la solicitud
+        res.json(updatedFrame);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+
 }

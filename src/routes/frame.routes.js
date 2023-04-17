@@ -8,9 +8,9 @@ router.post('/createFrame', frameCtrl.createFrame);
 
 router.post('/obtener', frameCtrl.createData);
 
-//router.post('/createEst', frameCtrl.createEsta)
-
 router.get('/getAll', frameCtrl.getFrame)
+
+router.get('/getLast', frameCtrl.getLast)
 
 router.post('/getReport', frameCtrl.getReport)
 
@@ -23,5 +23,7 @@ router.get('/:frameId', frameCtrl.getFrameById)
 router.put('/:frameId', frameCtrl.updateFrame)
 
 router.delete('/deleteFrame', frameCtrl.deleteFrame)
+
+router.put('/modifyFrame/:id', frameCtrl.updateData);
 
 export default router;

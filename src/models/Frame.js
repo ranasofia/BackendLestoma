@@ -26,7 +26,7 @@ const frameSchema = new mongoose.Schema({
     Dire_Registro: Number,
     Estacion_Meteorologica: estationSchema,
     Datos: datosSchema,
-    CRC: Number
+    CRC: String
 },
 {
     timestamps: true

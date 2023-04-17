@@ -20,4 +20,6 @@ router.get("/getUser/:userId", usersCtrl.getUserById);
 
 router.put("/putUser/:userId", usersCtrl.updateUserById);
 
+router.post('/forgetPassword', usersCtrl.forgotPassword);
+
 export default router;
