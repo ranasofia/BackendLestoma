@@ -5,10 +5,10 @@ import Role from '../models/Role';
 import Upa from '../models/Upa';
 
 export const registre = async (req, res) => {
-
+    
     const { name, lastname, email, password, roles, upaId} = req.body;
     console.log(upaId)
-    const upa = await Upa.findOne({upaId});
+    const upa = await Upa.findById(upaId);
 
     const newUser = new User({
         name,
