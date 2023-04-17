@@ -2,16 +2,23 @@ import User from '../models/User'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 import Role from '../models/Role';
-
+import Upa from '../models/Upa';
 
 export const registre = async (req, res) => {
-    const { name, lastname, email, password, roles} = req.body;
+
+    const { name, lastname, email, password, roles, upaName} = req.body;
+    console.log(upaName)
+    const upa = await Upa.findOne({ name: upaName });
+
     const newUser = new User({
         name,
         lastname,
         email,
         password,
+        upa: upa._id
     });
+
+    
 
     if (roles){
         const foundRoles = await Role.find({id_rol: {$in: roles}})
@@ -23,6 +30,7 @@ export const registre = async (req, res) => {
     }
     const saveUser = await newUser.save();
     console.log(saveUser)
+
 
     const token = jwt.sign({name: saveUser.name, lastname: saveUser.lastname, email: saveUser.email, rol: saveUser.roles},config.SECRET,{
         expiresIn: 86400 //1 day

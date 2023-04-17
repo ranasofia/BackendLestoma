@@ -9,6 +9,9 @@ router.get('/getupa', upaCtrl.getUPAS)
 
 router.get('/:upaId', upaCtrl.getUpaById)
 
+router.get('/userby/:upaId', upaCtrl.getUserByUpa)
+
+
 router.put('/:upaId', upaCtrl.editUPA)
 
 router.delete('/:upaId', upaCtrl.deleteUPA)

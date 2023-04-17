@@ -18,6 +18,13 @@ const estationSchema = new mongoose.Schema({
     Lluvia: Number() 
 });
 
+const actuatorsSchema = new mongoose.Schema({
+    Alarmas: Boolean,
+    Recirculacion: Boolean,
+    Alimentacion: Boolean,
+    Oxigeno: Boolean
+});
+
 const frameSchema = new mongoose.Schema({
     NombreUpa: String,
     Type_Com: Boolean,
@@ -26,6 +33,7 @@ const frameSchema = new mongoose.Schema({
     Dire_Registro: Number,
     Estacion_Meteorologica: estationSchema,
     Datos: datosSchema,
+    Actuadores: actuatorsSchema,
     CRC: String
 },
 {

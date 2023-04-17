@@ -1,4 +1,5 @@
 import Upa from '../models/Upa'
+import User from '../models/User'
 
 export const createUPA = async (req, res) => {
 
@@ -41,4 +42,25 @@ export const editUPA = (req, res) => {
 export const deleteUPA = (req, res) => {
     
 }
+export const getUserByUpa = async (req, res) => {
+  const upaId = req.params.upaId;
+
+  try {
+    // Buscar la UPA correspondiente
+    const upa = await Upa.findById(upaId);
+    console.log(upa)
+    if (!upa) {
+      return res.status(404).json({ message: 'No se encontró la UPA.' });
+    }
+
+    // Buscar todos los usuarios con el ID de UPA correspondiente
+    const users = await User.find({ upa: upa._id });
+
+    res.status(200).json({ upa, users });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error al obtener la UPA y los usuarios vinculados.' });
+  }
+}
+
 
