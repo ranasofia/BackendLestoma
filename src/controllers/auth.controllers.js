@@ -6,9 +6,9 @@ import Upa from '../models/Upa';
 
 export const registre = async (req, res) => {
 
-    const { name, lastname, email, password, roles, upaName} = req.body;
-    console.log(upaName)
-    const upa = await Upa.findOne({ name: upaName });
+    const { name, lastname, email, password, roles, upaId} = req.body;
+    console.log(upaId)
+    const upa = await Upa.findOne({upaId});
 
     const newUser = new User({
         name,
