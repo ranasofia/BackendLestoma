@@ -26,8 +26,8 @@ const actuatorsSchema = new mongoose.Schema({
 });
 
 const frameSchema = new mongoose.Schema({
-    NombreUpa: String,
-    Type_Com: Boolean,
+    NombreUpa:{ type: mongoose.Schema.Types.ObjectId, ref: "Upa"},
+    Type_Com: Number,
     Dir_Esclavo: Number,
     Funtion: String,
     Dire_Registro: Number,

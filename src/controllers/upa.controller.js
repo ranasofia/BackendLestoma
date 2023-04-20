@@ -1,5 +1,6 @@
 import Upa from '../models/Upa'
 import User from '../models/User'
+import Frame from '../models/Frame'
 
 export const createUPA = async (req, res) => {
 
@@ -64,3 +65,22 @@ export const getUserByUpa = async (req, res) => {
 }
 
 
+export const getFrameByUpa = async (req, res) => {
+  const upaId = req.params.upaId;
+
+  try {
+
+    const upa = await Upa.findById(upaId);
+    console.log(upa)
+    if (!upa) {
+      return res.status(404).json({ message: 'No se encontró la UPA.' });
+    }
+
+    const frame = await Frame.find({ NombreUpa: upa._id });
+
+    res.status(200).json({ upa, frame });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error al obtener la UPA y los usuarios vinculados.' });
+  }
+}
