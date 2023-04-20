@@ -12,7 +12,9 @@ router.get('/getAll', frameCtrl.getFrame)
 
 router.get('/getLast', frameCtrl.getLast)
 
-router.get('/getLastFrameUpa/:upaId', frameCtrl.getLastByUpa)
+router.get('/getLastFrameUpa/:upaId', frameCtrl.getLastFrameByUpa)
+
+router.get('/getAllFrameUpa/:upaId', frameCtrl.getAllFrameByUpa)
 
 router.post('/getReport', frameCtrl.getReport)
 
