@@ -13,7 +13,6 @@ router.get('/userby/:upaId', upaCtrl.getUserByUpa)
 
 router.get('/frameby/:upaId', upaCtrl.getFrameByUpa)
 
-
 router.put('/:upaId', upaCtrl.editUPA)
 
 router.delete('/:upaId', upaCtrl.deleteUPA)

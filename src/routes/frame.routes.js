@@ -12,6 +12,8 @@ router.get('/getAll', frameCtrl.getFrame)
 
 router.get('/getLast', frameCtrl.getLast)
 
+router.get('/getLastFrameUpa/:upaId', frameCtrl.getLastByUpa)
+
 router.post('/getReport', frameCtrl.getReport)
 
 router.post('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)

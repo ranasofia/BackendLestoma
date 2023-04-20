@@ -1,7 +1,8 @@
 import Frame from '../models/Frame'
 const faker = require('faker');
 const mongoose = require('mongoose');
-const PDF = require('pdfkit-construct') 
+const PDF = require('pdfkit-construct')
+import Upa from '../models/Upa' 
 
 
 
@@ -263,6 +264,24 @@ export const getLast = async (req, res) => {
         console.log(error);
     }
 }
+
+export const getLastByUpa = async (req, res) => {
+    const upaId = req.params.upaId;
+
+    try {
+      const upa = await Upa.findById(upaId);
+      if (!upa) {
+        return res.status(404).json({ message: 'No se encontró la UPA.' });
+      }
+  
+      const lastFrame = await Frame.findOne({ NombreUpa: upa._id }).sort({ _id: -1 });
+  
+      res.status(200).json(lastFrame);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error al obtener la última trama vinculada a la UPA.'});
+    }
+  }
 
 export const updateData = async (req, res, next) => {
     
