@@ -8,6 +8,11 @@ export const registre = async (req, res) => {
     
     const { name, lastname, email, password, roles, upaId} = req.body;
     console.log(upaId)
+
+    const user = await User.findOne({ email: email });
+    if (user) {
+        return res.status(400).json({ message: 'El correo electrónico ya está registrado' });
+    }
     const upa = await Upa.findById(upaId);
 
     const newUser = new User({
@@ -51,7 +56,8 @@ export const signin = async (req, res) => {
 
     if (!matchPassword) return res.status(401).json({token: null, message: 'Contraseña incorrecta'})
     
-    const token = jwt.sign({name: userFound.name, lastname: userFound.lastname, email: userFound.email, rol: userFound.roles, upa: userFound.upa}, config.SECRET,{
+    const token = jwt.sign({id: userFound._id, name: userFound.name, lastname: userFound.lastname, email: userFound.email, rol: userFound.roles,upa: userFound.upa}, config.SECRET,
+    {
         expiresIn: 86400
     })
 
@@ -89,6 +95,22 @@ export const getUsers = async (req, res) => {
     
 }
 
+export const getUsersWithRole2 = async (req, res) => {
+  try {
+    const role2 = await Role.findOne({ id_rol: 2 });
+
+    const users = await User.find({ roles: { $in: [role2._id] } })
+      .select('-password') // excluye el campo password de la respuesta
+      .populate({ path: 'roles', model: 'Role', select: 'id_rol name_rol' })
+      .exec();
+
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 export const getUserById = async (req, res) => {
     
     const { userId } = req.params;
@@ -97,3 +119,31 @@ export const getUserById = async (req, res) => {
     res.status(200).json(users);
 
 }
+
+export const getUserLogged = async (req, res) => {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, config.SECRET);
+      const userId = decoded.id;
+      const user = await User.findOne({ email: decoded.email });
+      console.log(user);
+      res.status(200).json({ email: user.email });
+    } catch (err) {
+      console.log(err);
+      res.status(401).json({ message: 'Token inválido' });
+    }
+};
+
+export const getIdUserLogged = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, config.SECRET);
+    const userId = decoded.id;
+    const user = await User.findOne({ email: decoded.email });
+    res.status(200).json({ userId:user._id });
+  } catch (err) {
+    console.log(err);
+    res.status(401).json({ message: 'Token inválido' });
+  }
+};
+  

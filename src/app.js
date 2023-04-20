@@ -4,9 +4,11 @@ import authRoutes from './routes/auth.routes'
 import frameRoutes from './routes/frame.routes'
 import upaRoutes from './routes/upa.routes'
 import userRoutes from './routes/user.routes'
-import dataRoutes from './routes/data.routes'
+import chatRoutes from './routes/chat.routes'
 import {createRoles} from './libs/inicialSetUp';
 import { createInitialData} from './libs/inicialSetUpUpa'
+
+
 
 const app = express()
 createInitialData();
@@ -22,6 +24,7 @@ app.use(function(req, res, next) {
 
 app.use(express.json())
 app.use(morgan('dev'));
+
 
 //app.get('/',(req,res) =>{
   //  res.json({
@@ -39,6 +42,6 @@ app.use('/api/frame', frameRoutes);
 
 app.use('/api/upa', upaRoutes);
 
-
+app.use('/api/chat', chatRoutes);
 
 export default app;
