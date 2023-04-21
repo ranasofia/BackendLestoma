@@ -53,13 +53,22 @@ export const getUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
     
-    const { userId } = req.params;
-
-    const users = await User.findById(userId)
-    .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
-    .exec((err, users) => {
-        res.json({users});
-    })
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        const userResponse = {
+          fullName: `${user.name} ${user.lastname}`,
+          email: user.email,
+          upa: user.upa
+        };
+        return res.status(200).json({ userResponse });
+      } catch (err) {
+        console.error(err.message);
+        return res.status(500).json({ message: 'Error interno del servidor' });
+      }
 
 }
 

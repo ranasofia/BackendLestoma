@@ -34,6 +34,21 @@ export const getUpaById = async (req, res, next) => {
     res.status(500).json({ message: 'Algo salió mal al buscar la UPA' });
   }
 }
+export const getUpaNameById  = async (req, res, next) => {
+  const upaId = req.params.upaId;
+  try {
+    const upa = await Upa.findById(upaId).select('name location').exec();
+    if (!upa) {
+      return res.status(404).json({ message: 'No se encontró ninguna UPA con el ID proporcionado' });
+    }
+    res.json({ name: upa.name, location: upa.location });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Algo salió mal al buscar la UPA' });
+  }
+}
+
+
 
 
 export const editUPA = (req, res) => {
