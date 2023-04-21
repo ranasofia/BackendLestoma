@@ -19,10 +19,10 @@ const estationSchema = new mongoose.Schema({
 });
 
 const actuatorsSchema = new mongoose.Schema({
-    Alarmas: Boolean,
-    Recirculacion: Boolean,
-    Alimentacion: Boolean,
-    Oxigeno: Boolean
+    Alarmas: Number,
+    Recirculacion: Number,
+    Alimentacion: Number,
+    Oxigeno: Number
 });
 
 const frameSchema = new mongoose.Schema({
