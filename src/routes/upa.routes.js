@@ -9,6 +9,8 @@ router.get('/getupa', upaCtrl.getUPAS)
 
 router.get('/:upaId', upaCtrl.getUpaById)
 
+router.get('/upaName/:upaId', upaCtrl.getUpaNameById)
+
 router.get('/userby/:upaId', upaCtrl.getUserByUpa)
 
 router.get('/frameby/:upaId', upaCtrl.getFrameByUpa)

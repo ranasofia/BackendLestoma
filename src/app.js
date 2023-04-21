@@ -10,6 +10,8 @@ import { createInitialData} from './libs/inicialSetUpUpa'
 
 
 
+
+
 const app = express()
 createInitialData();
 createRoles();
@@ -21,6 +23,8 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
+
+
 
 app.use(express.json())
 app.use(morgan('dev'));
