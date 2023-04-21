@@ -5,6 +5,8 @@ import * as upaCtrl from '../controllers/upa.controller'
 
 router.post('/createUpa', upaCtrl.createUPA)
 
+router.post('/enviarMail',upaCtrl.sendEmail)
+
 router.get('/getupa', upaCtrl.getUPAS)
 
 router.get('/:upaId', upaCtrl.getUpaById)
