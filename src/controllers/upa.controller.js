@@ -1,6 +1,11 @@
 import Upa from '../models/Upa'
 import User from '../models/User'
 import Frame from '../models/Frame'
+import config from '../config'
+
+const nodemailer = require("nodemailer");
+
+
 
 export const createUPA = async (req, res) => {
 
@@ -100,3 +105,55 @@ export const getFrameByUpa = async (req, res) => {
   }
 }
 
+
+const sendEmailMessage = async (name, email, message) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: config.EMAIL_USER,
+        pass: config.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: config.EMAIL_USER,
+      to: email,
+      subject: 'Mensaje de Notificación',
+      html: "</p><p>" + message + "</p>",
+    };
+    console.log(mailOptions);
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("El mensaje ha sido enviado: ", info.response);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const sendEmail = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const userData = await User.findOne({email:email});
+      
+    if(userData){
+      const message = req.body.message;
+      sendEmailMessage(userData.name, userData.email, message);
+      res.status(200).send({success:true, msg:"Correo enviado."});
+
+    }else{
+      res.status(200).send({success:true, msg:"El correo no existe."});
+    }
+  } catch (error){
+      res.status(400).send({success:false, msg:error.message});
+  }
+}
