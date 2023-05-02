@@ -18,8 +18,12 @@ router.get("/getAll", usersCtrl.getUsers);
 
 router.get("/getUser/:userId", usersCtrl.getUserById);
 
+router.get('/resetPass', usersCtrl.resetPass);
+
 router.put("/putUser/:userId", usersCtrl.updateUserById);
 
 router.post('/forgetPassword', usersCtrl.forgotPassword);
+
+router.post('/resetPassword', usersCtrl.resetPassword);
 
 export default router;

@@ -26,7 +26,7 @@ const sendResetPassword = async(name,email,token)=>{
             from:config.EMAIL_USER,
             to:email,
             subject:'Recuperar contraseña',
-            html: '<p> Hiii' + name +', Por favor da click al link <a href="http://localhost:3000/api/users/resetPass?token='+ token+'"> para recuperar tu contraseña</a>'
+            html: '<p> Hola ' + name +', por favor da click al link para <a href="http://localhost:4200/restaurar-clave/'+ token+'">  restablecer tu contraseña</a>'
         }
         transporter.sendMail(mailOption,function(error,info){
             if(error){
@@ -64,6 +64,7 @@ export const getUserById = async (req, res) => {
           email: user.email,
           upa: user.upa
         };
+        console.log(userResponse);
         return res.status(200).json({ userResponse });
       } catch (err) {
         console.error(err.message);
@@ -88,7 +89,7 @@ export const forgotPassword = async (req, res) => {
         if(userData){
             
            const randomString = randomstring.generate();
-            const data = await User.updateOne({email:email},{$set:{token:randomString}});
+           const data = await User.updateOne({email:email},{$set:{token:randomString}});
            sendResetPassword(userData.name,userData.email,randomString);
            res.status(200).send({success:true, msg:"Revisa tu correo electronico."});
 
@@ -106,13 +107,41 @@ export const resetPass = async (req, res) => {
 
         const token = req.query.token;
         const tokenData = await User.findOne({token:token});
+        console.log(tokenData);
         if (tokenData){
             const pass = req.body.password;
-            const newPassword = await pass;
-            const userData = await User.findByIdAndUpdate({_id:tokenData._id},{$set:{pass:newPassword, token:''}},{new:true});
+            
+            const newPassword = await User.encriptPass(pass);
+            
+            const userData = await User.findByIdAndUpdate({_id:tokenData._id},{$set:{password:newPassword, token:''}},{new:true});
+            console.log(userData);
             res.status(200).send({success:true, msg:"Exito.", data:userData});
         }else{
-            res.status(200).send({success:true, msg:"El link expiro."});
+            res.status(200).send({success:false, msg:"El link expiro."});
+        }
+
+
+    }catch (error) {
+        res.status(400).send({success:false, msg:error.message});
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    try{
+
+        const token = req.query.token;
+        const tokenData = await User.findOne({token:token});
+        console.log(tokenData);
+        if (tokenData){
+            const pass = req.body.password;
+            
+            const newPassword = await User.encriptPass(pass);
+            
+            const userData = await User.findByIdAndUpdate({_id:tokenData._id},{$set:{password:newPassword, token:''}},{new:true});
+            console.log(userData);
+            res.status(201).send({success:true, msg:"Exito.", data:userData});
+        }else{
+            res.status(400).send({success:false, msg:"El link expiro."});
         }
 
 

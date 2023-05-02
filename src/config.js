@@ -6,6 +6,6 @@ export default {
   PORT: process.env.PORT || 3000,
   SECRET: 'lestoma-api',
   SECRET_JWT: 'secretkey',
-  EMAIL_USER:'loperasofi02@gmail.com',
-  EMAIL_PASSWORD: 'yesruclgpifcbqbq'
+  EMAIL_USER:'fishwebapp@gmail.com',
+  EMAIL_PASSWORD: 'iovejraqwwdhrguv'
 };
