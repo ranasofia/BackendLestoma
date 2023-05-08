@@ -2,6 +2,7 @@ import { Router } from "express";
 const router = Router();
 
 import * as usersCtrl from "../controllers/user.controller";
+import { verifyToken } from '../middlewares';
 /* import { authJwt, verifySignup } from "../middlewares"; */
 
 /* router.post(
@@ -14,16 +15,16 @@ import * as usersCtrl from "../controllers/user.controller";
   usersCtrl.createUser
 ); */
 
-router.get("/getAll", usersCtrl.getUsers);
+router.get("/getAll", verifyToken, usersCtrl.getUsers);
 
-router.get("/getUser/:userId", usersCtrl.getUserById);
+router.get("/getUser/:userId", verifyToken, usersCtrl.getUserById);
 
-router.get('/resetPass', usersCtrl.resetPass);
+router.get('/resetPass', verifyToken, usersCtrl.resetPass);
 
-router.put("/putUser/:userId", usersCtrl.updateUserById);
+router.put("/putUser/:userId", verifyToken, usersCtrl.updateUserById);
 
-router.post('/forgetPassword', usersCtrl.forgotPassword);
+router.post('/forgetPassword', verifyToken, usersCtrl.forgotPassword);
 
-router.post('/resetPassword', usersCtrl.resetPassword);
+router.post('/resetPassword', verifyToken, usersCtrl.resetPassword);
 
-export default router;
+export default router; 

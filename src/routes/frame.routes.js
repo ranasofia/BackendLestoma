@@ -3,32 +3,33 @@ import {json, Router} from 'express'
 const router = Router()
  
 import * as frameCtrl from '../controllers/frame.controller'
+import { verifyToken } from '../middlewares';
 
-router.post('/createFrame', frameCtrl.createFrame);
+router.post('/createFrame', verifyToken, frameCtrl.createFrame);
 
-router.post('/obtener', frameCtrl.createData);
+router.post('/obtener', verifyToken, frameCtrl.createData);
 
-router.get('/getAll', frameCtrl.getFrame)
+router.get('/getAll', verifyToken, frameCtrl.getFrame)
 
-router.get('/getLast', frameCtrl.getLast)
+router.get('/getLast', verifyToken, frameCtrl.getLast)
 
-router.get('/getLastFrameUpa/:upaId', frameCtrl.getLastFrameByUpa)
+router.get('/getLastFrameUpa/:upaId', verifyToken, frameCtrl.getLastFrameByUpa)
 
-router.get('/getAllFrameUpa/:upaId', frameCtrl.getAllFrameByUpa)
+router.get('/getAllFrameUpa/:upaId', verifyToken, frameCtrl.getAllFrameByUpa)
 
 router.post('/getReport', frameCtrl.getReport)
 
-router.post('/getFrameVariablesDate', frameCtrl.getFrame_DateVariables)
+router.post('/getFrameVariablesDate', verifyToken, frameCtrl.getFrame_DateVariables)
 
-router.get('/getCRC', frameCtrl.getCRC)
+router.get('/getCRC', verifyToken, frameCtrl.getCRC)
 
-router.get('/:frameId', frameCtrl.getFrameById)
+router.get('/:frameId', verifyToken, frameCtrl.getFrameById)
 
-router.put('/:frameId', frameCtrl.updateFrame)
+router.put('/:frameId', verifyToken, frameCtrl.updateFrame)
 
-router.delete('/deleteFrame', frameCtrl.deleteFrame)
+router.delete('/deleteFrame', verifyToken, frameCtrl.deleteFrame)
 
-router.put('/modifyFrame/:id', frameCtrl.updateData);
+router.put('/modifyFrame/:id', verifyToken, frameCtrl.updateData);
 
 router.post('/getDataReport', frameCtrl.getDataReport)
 
