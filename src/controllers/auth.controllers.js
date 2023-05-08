@@ -124,16 +124,12 @@ export const updateUser = async (req, res) => {
 } */
 
 export const getUsers = async (req, res) => {
-  // Validación de roles
-  if (!req.user.roles.includes("Superadmin")) {
-      return res.status(401).json({ message: 'No tiene permiso para acceder a esta información' });
-  }
 
-  const users = await User.find()
-      .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
-      .exec((err, users) => {
-          res.json(users);
-      });
+    const users = await User.find()
+    .populate({path: "roles", model: "Role", select: "id_rol name_rol"})
+    .exec((err, users) => {
+        res.json(users);
+    })
 }
 
 export const getUsersWithRole2 = async (req, res) => {
