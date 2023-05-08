@@ -238,55 +238,71 @@ export const getReport = async (req, res, next) => {
 };
 
 export const getDataReport = async (req, res, next) => {
-    const { fechaInicio, fechaFin, variables, nombreUpa } = req.body;
-
-    // Crea un objeto de selección vacío
-    const seleccion = {};
-
-    // Agrega las variables seleccionadas a la selección del usuario
-    if (variables) {
-        variables.forEach(variable => {
-            seleccion[`Datos.${variable}`] = 1;
+    try {
+      const { fechaInicio, fechaFin, variables, nombreUpa } = req.body;
+  
+      // Validar los parámetros de entrada
+      if (!fechaInicio || !fechaFin) {
+        return res.status(400).json({ message: "Las fechas son requeridas" });
+      }
+  
+      // Convertir las fechas al formato de fecha de la base de datos
+      const fechaInicioDB = new Date(fechaInicio).toISOString();
+      const fechaFinDB = new Date(fechaFin).toISOString();
+  
+      // Crear un objeto de selección vacío
+      const seleccion = {};
+  
+      // Agregar las variables seleccionadas a la selección del usuario
+      if (variables) {
+        variables.forEach((variable) => {
+          seleccion[`Datos.${variable}`] = 1;
         });
-    }
-    seleccion['createdAt'] = 1;
-
-    // Agrega la condición de filtro por nombreUpa si se proporciona
-    const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
-
-    // Realiza la consulta en la base de datos utilizando el rango de fechas, la selección de variables y el filtro por nombreUpa
-    const datos = await Frame.find({
+      }
+      seleccion["createdAt"] = 1;
+  
+      // Agregar la condición de filtro por nombreUpa si se proporciona
+      const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
+  
+      // Realizar la consulta en la base de datos utilizando el rango de fechas, la selección de variables y el filtro por nombreUpa
+      const datos = await Frame.find({
         ...filtroNombreUpa,
         updatedAt: {
-            $gte: fechaInicio,
-            $lte: fechaFin
-        }
-    })
-    .select(seleccion) // Aplica la selección al resultado de la consulta
-    .exec();
-
-    if (!datos) {
-        return res.status(404).send("No se encontraron datos");
-    }
-
-    // Transforma los datos en un arreglo de objetos plano para que puedan ser serializados en formato JSON
-    const datosJSON = datos.map(d => {
+          $gte: fechaInicioDB,
+          $lte: fechaFinDB,
+        },
+      })
+        .select(seleccion) // Aplicar la selección al resultado de la consulta
+        .exec();
+  
+      // Manejar el caso en que no se encontraron datos
+      if (datos.length === 0) {
+        return res.status(404).json({ message: "No se encontraron datos" });
+      }
+  
+      // Transformar los datos en un arreglo de objetos plano para que puedan ser serializados en formato JSON
+      const datosJSON = datos.map((d) => {
         const obj = {
-            fecha: new Date(d.createdAt).toLocaleDateString('es-ES')
+          fecha: new Date(d.createdAt).toLocaleDateString("es-ES"),
         };
-
+  
         // Agregar cada variable seleccionada al objeto
         if (variables) {
-            variables.forEach(variable => {
-                obj[variable] = d.Datos[variable];
-            });
+          variables.forEach((variable) => {
+            obj[variable] = d.Datos[variable];
+          });
         }
-
+  
         return obj;
-    });
-
-    return res.json(datosJSON);
-};
+      });
+  
+      // Devolver la respuesta al cliente
+      return res.status(200).json(datosJSON);
+    } catch (error) {
+      // Manejar cualquier error que se produzca durante la ejecución de la función
+      next(error);
+    }
+  };  
 
 
 export const getCRC = async (req, res) => {
