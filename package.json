@@ -23,6 +23,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.4.4",
     "morgan": "^1.10.0",
+    "nocache": "^3.0.4",
     "nodemailer": "^6.9.1",
     "pdfkit": "^0.13.0",
     "pdfkit-construct": "github:soufiane-marar/pdfkit-construct",

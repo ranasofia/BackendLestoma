@@ -17,7 +17,7 @@ export const registre = async (req, res) => {
 
     const newUser = new User({
         name,
-        lastname,
+       // lastname
         email,
         password,
         upa: upa._id
@@ -37,7 +37,9 @@ export const registre = async (req, res) => {
     console.log(saveUser)
 
 
-    const token = jwt.sign({name: saveUser.name, lastname: saveUser.lastname, email: saveUser.email, rol: saveUser.roles, upa: saveUser.upa},config.SECRET,{
+    const token = jwt.sign({name: saveUser.name, 
+      // lastname: saveUser.lastname 
+      email: saveUser.email, rol: saveUser.roles, upa: saveUser.upa},config.SECRET,{
         expiresIn: 86400 //1 day
     })
 
@@ -56,7 +58,9 @@ export const signin = async (req, res) => {
 
     if (!matchPassword) return res.status(401).json({token: null, message: 'Contraseña incorrecta'})
     
-    const token = jwt.sign({id: userFound._id, name: userFound.name, lastname: userFound.lastname, email: userFound.email, rol: userFound.roles,upa: userFound.upa}, config.SECRET,
+    const token = jwt.sign({id: userFound._id, name: userFound.name, 
+      // lastname: userFound.lastname
+      email: userFound.email, rol: userFound.roles,upa: userFound.upa}, config.SECRET,
     {
         expiresIn: 86400
     })
@@ -64,6 +68,26 @@ export const signin = async (req, res) => {
     res.json({token})
 
 }
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+const { name, lastname } = req.body;
+
+try {
+  const user = await User.findByIdAndUpdate(id, { name, lastname }, { new: true });
+
+
+  if (!user) {
+    return res.status(404).json({ message: 'Usuario no encontrado' });
+  }
+
+  res.status(200).json(user);
+} catch (error) {
+  console.log(error);
+  res.status(500).json({ message: 'Error al actualizar el usuario' });
+}
+
+};
+
 
 /* exports.getUsers = async (req, res) => {
 
@@ -116,6 +140,7 @@ export const getUserById = async (req, res) => {
     const { userId } = req.params;
 
     const users = await User.findById(userId);
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.status(200).json(users);
 
 }

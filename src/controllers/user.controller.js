@@ -60,7 +60,8 @@ export const getUserById = async (req, res) => {
           return res.status(404).json({ message: 'Usuario no encontrado' });
         }
         const userResponse = {
-          fullName: `${user.name} ${user.lastname}`,
+          name: user.name,
+          lastname: user.lastname,
           email: user.email,
           upa: user.upa
         };

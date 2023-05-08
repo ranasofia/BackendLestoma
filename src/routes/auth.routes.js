@@ -3,6 +3,8 @@ const router = Router()
 
 import * as authCtrl from '../controllers/auth.controllers'
 
+
+
 router.post('/registre', authCtrl.registre)
 
 router.post('/signin', authCtrl.signin)
@@ -16,5 +18,8 @@ router.get('/userAuth', authCtrl.getUserLogged)
 router.get('/userAuthId', authCtrl.getIdUserLogged)
 
 router.get('/getUsersWithRole2', authCtrl.getUsersWithRole2)
+
+router.put('/updateUser/:id', authCtrl.updateUser)
+
 
 export default router;
