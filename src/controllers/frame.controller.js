@@ -66,7 +66,7 @@ export const deleteFrame = (req, res) => {
 }
 
 export const getFrame_DateVariables = async (req, res, next) => {
-    const { fechaInicio, fechaFin, variables } = req.body;
+    const { fechaInicio, fechaFin, variables, nombreUpa } = req.body;
 
     // Crea un objeto de selección vacío
     const seleccion = {};
@@ -80,8 +80,12 @@ export const getFrame_DateVariables = async (req, res, next) => {
 
     seleccion['createdAt'] = 1;
 
+    // Agrega la condición de filtro por nombreUpa si se proporciona
+    const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
+
     // Realiza la consulta en la base de datos utilizando el rango de fechas y la selección de variables
     Frame.find({
+        ...filtroNombreUpa,
         updatedAt: {
             $gte: fechaInicio,
             $lte: fechaFin
@@ -96,6 +100,7 @@ export const getFrame_DateVariables = async (req, res, next) => {
         res.json(datos);
     });
 };
+
 
 export const getReport = async (req, res, next) => {
     const { fechaInicio, fechaFin, variables } = req.body;
@@ -231,6 +236,58 @@ export const getReport = async (req, res, next) => {
         doc.end();
     });
 };
+
+export const getDataReport = async (req, res, next) => {
+    const { fechaInicio, fechaFin, variables, nombreUpa } = req.body;
+
+    // Crea un objeto de selección vacío
+    const seleccion = {};
+
+    // Agrega las variables seleccionadas a la selección del usuario
+    if (variables) {
+        variables.forEach(variable => {
+            seleccion[`Datos.${variable}`] = 1;
+        });
+    }
+    seleccion['createdAt'] = 1;
+
+    // Agrega la condición de filtro por nombreUpa si se proporciona
+    const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
+
+    // Realiza la consulta en la base de datos utilizando el rango de fechas, la selección de variables y el filtro por nombreUpa
+    const datos = await Frame.find({
+        ...filtroNombreUpa,
+        updatedAt: {
+            $gte: fechaInicio,
+            $lte: fechaFin
+        }
+    })
+    .select(seleccion) // Aplica la selección al resultado de la consulta
+    .exec();
+
+    if (!datos) {
+        return res.status(404).send("No se encontraron datos");
+    }
+
+    // Transforma los datos en un arreglo de objetos plano para que puedan ser serializados en formato JSON
+    const datosJSON = datos.map(d => {
+        const obj = {
+            fecha: new Date(d.createdAt).toLocaleDateString('es-ES')
+        };
+
+        // Agregar cada variable seleccionada al objeto
+        if (variables) {
+            variables.forEach(variable => {
+                obj[variable] = d.Datos[variable];
+            });
+        }
+
+        return obj;
+    });
+
+    return res.json(datosJSON);
+};
+
 
 export const getCRC = async (req, res) => {
 

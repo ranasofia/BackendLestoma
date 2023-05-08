@@ -30,4 +30,6 @@ router.delete('/deleteFrame', frameCtrl.deleteFrame)
 
 router.put('/modifyFrame/:id', frameCtrl.updateData);
 
+router.post('/getDataReport', frameCtrl.getDataReport)
+
 export default router;
