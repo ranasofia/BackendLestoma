@@ -131,6 +131,8 @@ import { verifyToken } from '../middlewares';
  */
 router.post('/createFrame', verifyToken, frameCtrl.createFrame);
 
+router.post('/createFrameDev', verifyToken, frameCtrl.createFrameDev);
+
 router.post('/obtener', verifyToken, frameCtrl.createData);
 
 /**
@@ -320,7 +322,7 @@ router.get('/getLastFrameUpa/:upaId', verifyToken, frameCtrl.getLastFrameByUpa)
  */
 router.get('/getAllFrameUpa/:upaId', verifyToken, frameCtrl.getAllFrameByUpa)
 
-router.get('/getAllFrameUpa/:upaId',frameCtrl.getLastFrameByUpaDev)
+router.get('/getAllFrameUpaDev/:upaId',frameCtrl.getLastFrameByUpaDev)
 
 router.post('/getReport', frameCtrl.getReport)
 
