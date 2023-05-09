@@ -93,7 +93,7 @@ export const getFrame_DateVariables = async (req, res, next) => {
     // Agrega la condición de filtro por nombreUpa si se proporciona
     const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
 
-    // Realiza la consulta en la base de datos utilizando el rango de fechas y la selección de variables
+    // Realiza la consulta en  la base de datos utilizando el rango de fechas y la selección de variables
     Frame.find({
         ...filtroNombreUpa,
         updatedAt: {
