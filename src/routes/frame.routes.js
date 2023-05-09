@@ -131,7 +131,7 @@ import { verifyToken } from '../middlewares';
  */
 router.post('/createFrame', verifyToken, frameCtrl.createFrame);
 
-router.post('/createFrameDev', verifyToken, frameCtrl.createFrameDev);
+router.post('/createFrameDev',frameCtrl.createFrameDev);
 
 router.post('/obtener', verifyToken, frameCtrl.createData);
 
