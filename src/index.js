@@ -1,9 +1,10 @@
-import app from "./app";
+import app from "./app.js";
 import "./database";
+import config from "./config";
 
 const { swaggerDocs: V1SwaggerDocs } = require("./routes/swagger");
 
-app.listen(3000, () => {
-  console.log("blog server running on port", 3000);
-  V1SwaggerDocs(app, 3000);
+app.listen(config.PORT, () => {
+  console.log("blog server running on port");
+  V1SwaggerDocs(app, config.PORT);
 });

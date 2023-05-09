@@ -14,8 +14,10 @@ const app = express()
 createInitialData();
 createRoles();
 
+app.use(cors({origin:'*'}));
+
 app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -45,5 +47,23 @@ app.use('/api/frame', frameRoutes);
 app.use('/api/upa', upaRoutes);
 
 app.use('/api/chat', chatRoutes);
+
+app.use(function logErrors (err, req, res, next) {
+  console.error(err.stack)
+  next(err)
+});
+
+app.use(function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+});
+
+app.use(function errorHandler (err, req, res, next) {
+  res.status(500)
+  res.render('error', { error: err })
+});
 
 export default app;
