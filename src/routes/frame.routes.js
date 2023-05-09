@@ -322,7 +322,7 @@ router.get('/getLastFrameUpa/:upaId', verifyToken, frameCtrl.getLastFrameByUpa)
  */
 router.get('/getAllFrameUpa/:upaId', verifyToken, frameCtrl.getAllFrameByUpa)
 
-router.get('/getAllFrameUpaDev/:upaId',frameCtrl.getLastFrameByUpaDev)
+router.get('/getLastFrameUpaDev/:upaId',frameCtrl.getLastFrameByUpaDev)
 
 router.post('/getReport', frameCtrl.getReport)
 
