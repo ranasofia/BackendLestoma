@@ -8,9 +8,7 @@ import chatRoutes from './routes/chat.routes'
 import {createRoles} from './libs/inicialSetUp';
 import { createInitialData} from './libs/inicialSetUpUpa'
 const cors = require('cors');
-
-
-
+const { swaggerDocs } = require('./routes/swagger');
 
 const app = express()
 createInitialData();
@@ -24,7 +22,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-
+swaggerDocs(app);
 
 app.use(express.json())
 app.use(morgan('dev'));

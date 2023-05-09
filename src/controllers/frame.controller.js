@@ -34,9 +34,9 @@ exports.createData = async (req, res) => {
   });
 
   const CreatedFrame = await newFrame.save();
-     res.status(201).json(CreatedFrame);
-  } ;
-
+  res.status(201).json(CreatedFrame);
+  
+};
 
 export const createFrame = async (req, res) => {
 

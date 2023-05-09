@@ -28,7 +28,9 @@
     "pdfkit": "^0.13.0",
     "pdfkit-construct": "github:soufiane-marar/pdfkit-construct",
     "pdfkit-table": "^0.1.99",
-    "randomstring": "^1.2.3"
+    "randomstring": "^1.2.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.6",
