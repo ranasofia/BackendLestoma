@@ -320,6 +320,8 @@ router.get('/getLastFrameUpa/:upaId', verifyToken, frameCtrl.getLastFrameByUpa)
  */
 router.get('/getAllFrameUpa/:upaId', verifyToken, frameCtrl.getAllFrameByUpa)
 
+router.get('/getAllFrameUpa/:upaId',frameCtrl.getLastFrameByUpaDev)
+
 router.post('/getReport', frameCtrl.getReport)
 
 /**

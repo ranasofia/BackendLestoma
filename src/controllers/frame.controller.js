@@ -356,6 +356,25 @@ export const getLastFrameByUpa = async (req, res) => {
     }
 }
 
+export const getLastFrameByUpaDev = async (req, res) => {
+  const upaId = req.params.upaId;
+
+  try {
+    const upa = await Upa.findById(upaId);
+    if (!upa) {
+      return res.status(404).json({ message: 'No se encontró la UPA.' });
+    }
+
+    const lastFrame = await Frame.findOne({ NombreUpa: upa._id }).sort({ _id: -1 });
+
+    res.status(200).json(lastFrame);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error al obtener la última trama vinculada a la UPA.'});
+  }
+}
+
+
 export const getAllFrameByUpa = async (req, res) => {
     const upaId = req.params.upaId;
   
