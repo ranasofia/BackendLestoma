@@ -318,7 +318,7 @@ router.get('/getLastFrameUpa/:upaId', verifyToken, frameCtrl.getLastFrameByUpa)
  *       404:
  *         description: No se encontró la UPA
  *       500:
- *         description: Error al obtener todas las tramas vinculadas a la UPA 
+ *         description: Error al obtener todas  las tramas vinculadas a la UPA 
  */
 router.get('/getAllFrameUpa/:upaId', verifyToken, frameCtrl.getAllFrameByUpa)
 
