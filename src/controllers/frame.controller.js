@@ -42,7 +42,7 @@ export const createFrame = async (req, res) => {
   const newFrame = await Frame.create(req.body);
   console.log(newFrame);
   const crc = require('crc');
-  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro} = newFrame;
+  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
   const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
   const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
