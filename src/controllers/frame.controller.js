@@ -59,24 +59,39 @@ export const createFrame = async (req, res) => {
 };
 
 export const createFrameDev = async (req, res) => {
-  const newFrame = await Frame.create(req.body);
-  console.log(newFrame);
-  const crc = require('crc');
-  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
+  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = req.body;
+  
+  // Verificar si algún campo está vacío
+  if (!Type_Com || !Dir_Esclavo || !Funtion || !Dire_Registro || !Estacion_Meteorologica || !Datos || !Actuadores) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+  
   const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
   const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
-  console.log(newFrame);
+
   const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
+
+  const crc = require('crc');
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
   const result = crc16modbus.toString(16).toUpperCase();
-  await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
 
-  newFrame.CRC = result;
+  try {
+    const newFrame = await Frame.create(req.body);
+    console.log(newFrame);
 
-  console.log(result);
-  res.json(newFrame);
+    await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
+
+    newFrame.CRC = result;
+
+    console.log(result);
+    res.json(newFrame);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Ocurrió un error al crear el marco' });
+  }
 };
+
 
 
 export const getFrame = async (req, res) => {
