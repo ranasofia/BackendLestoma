@@ -59,38 +59,14 @@ export const createFrame = async (req, res) => {
 };
 
 export const createFrameDev = async (req, res) => {
-  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = req.body;
+  const newFrame = await Frame.create(req.body);
+  console.log(newFrame);
+  const crc = require('crc');
+  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
   const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
   const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
-
-  if (
-    !Type_Com ||
-    !Dir_Esclavo ||
-    !Funtion ||
-    !Dire_Registro ||
-    !Temperatura ||
-    !Humedad ||
-    !Velocidad_Viento ||
-    !Dir_Viento ||
-    !Lluvia ||
-    !PH ||
-    !Conductividad_Electrica ||
-    !Nivel_Agua ||
-    !Turbidez ||
-    !Oxigeno_Disuelto ||
-    !Alarmas ||
-    !Recirculacion ||
-    !Alimentacion ||
-    !Oxigeno
-  ) {
-    return res.status(400).json({ error: 'Todos los campos son requeridos' });
-  }
-
-  const newFrame = await Frame.create(req.body);
   console.log(newFrame);
-
-  const crc = require('crc');
   const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
   const result = crc16modbus.toString(16).toUpperCase();
@@ -101,7 +77,6 @@ export const createFrameDev = async (req, res) => {
   console.log(result);
   res.json(newFrame);
 };
-
 
 
 export const getFrame = async (req, res) => {
