@@ -26,7 +26,7 @@ const sendResetPassword = async(name,email,token)=>{
             from:config.EMAIL_USER,
             to:email,
             subject:'Recuperar contraseña',
-            html: '<p> Hola ' + name +', por favor da click al link para <a href="http://localhost:4200/restaurar-clave/'+ token+'">  restablecer tu contraseña</a>'
+            html: '<p> Hola ' + name +', por favor da click al link para <a href="http://fishweb.herokuapp.com/restaurar-clave/'+ token+'">  restablecer tu contraseña</a>'
         }
         transporter.sendMail(mailOption,function(error,info){
             if(error){

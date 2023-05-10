@@ -281,7 +281,7 @@ router.put("/putUser/:userId", verifyToken, usersCtrl.updateUserById);
  *       401:
  *         description: Acceso denegado, token no válido o expirado
  */
-router.post('/forgetPassword', verifyToken, usersCtrl.forgotPassword);
+router.post('/forgetPassword', usersCtrl.forgotPassword);
 
 /**
  * @swagger
@@ -347,6 +347,6 @@ router.post('/forgetPassword', verifyToken, usersCtrl.forgotPassword);
  *           items:
  *             type: string
  */
-router.post('/resetPassword', verifyToken, usersCtrl.resetPassword);
+router.post('/resetPassword', usersCtrl.resetPassword);
 
 export default router; 
