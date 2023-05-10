@@ -62,12 +62,12 @@ export const createFrameDev = async (req, res) => {
   const newFrame = await Frame.create(req.body);
   console.log(newFrame);
   const crc = require('crc');
-  const { NombreUpa, Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
+  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
   const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
   const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
   console.log(newFrame);
-  const data = `${NombreUpa}${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
+  const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
   const result = crc16modbus.toString(16).toUpperCase();
   await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
