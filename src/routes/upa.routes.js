@@ -276,7 +276,7 @@ router.get('/upaName/:upaId', verifyToken, upaCtrl.getUpaNameById)
  *       500:
  *         description: Error interno del servidor
  */
-router.get('/userby/:upaId', verifyToken, upaCtrl.getUserByUpa)
+router.get('/userby/:upaId', upaCtrl.getUserByUpa)
 
 router.get('/frameby/:upaId', verifyToken, upaCtrl.getFrameByUpa)
 
