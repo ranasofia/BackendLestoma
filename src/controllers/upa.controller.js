@@ -39,37 +39,22 @@ export const getUpaById = async (req, res, next) => {
     res.status(500).json({ message: 'Algo salió mal al buscar la UPA' });
   }
 }
-export const getUpaNameById  = async (req, res, next) => {
-  const upaId = req.params.upaId;
-  try {
-    const upa = await Upa.findById(upaId).select('name location').exec();
-    if (!upa) {
-      return res.status(404).json({ message: 'No se encontró ninguna UPA con el ID proporcionado' });
-    }
-    res.json({ name: upa.name, location: upa.location });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: 'Algo salió mal al buscar la UPA' });
-  }
-}
-
 export const getEmailsByUpaId = async (req, res, next) => {
   const upaId = req.params.upaId;
-
   try {
-    const upa = await Upa.findById(upaId).select('users').populate('users').exec();
+    const upa = await Upa.findById(upaId).exec();
     if (!upa) {
       return res.status(404).json({ message: 'No se encontró ninguna UPA con el ID proporcionado' });
     }
-
-    const emails = upa.users.map(user => user.email);
-    console.log(emails)
+    const users = await User.find({ upa: upa._id });
+    const emails = users.map(user => user.email);
     res.json(emails);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: 'Algo salió mal al buscar los correos de los usuarios de la UPA' });
+    res.status(500).json({ message: 'Algo salió mal al buscar los correos electrónicos de la UPA' });
   }
 }
+
 
 
 
