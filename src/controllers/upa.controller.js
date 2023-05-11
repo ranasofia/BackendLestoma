@@ -53,6 +53,24 @@ export const getUpaNameById  = async (req, res, next) => {
   }
 }
 
+export const getEmailsByUpaId = async (req, res, next) => {
+  const upaId = req.params.upaId;
+
+  try {
+    const upa = await Upa.findById(upaId).select('users').populate('users').exec();
+    if (!upa) {
+      return res.status(404).json({ message: 'No se encontró ninguna UPA con el ID proporcionado' });
+    }
+
+    const emails = upa.users.map(user => user.email);
+    console.log(emails)
+    res.json(emails);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Algo salió mal al buscar los correos de los usuarios de la UPA' });
+  }
+}
+
 
 
 
