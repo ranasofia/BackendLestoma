@@ -57,7 +57,7 @@ import { verifyToken } from '../middlewares';
  *       500:
  *         description: Error al crear la UPA
  */
-router.post('/createUpa', verifyToken, upaCtrl.createUPA)
+router.post('/createUpa', upaCtrl.createUPA)
 
 /**
  * @swagger
