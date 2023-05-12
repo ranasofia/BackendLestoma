@@ -159,3 +159,15 @@ export const sendEmail = async (req, res) => {
       res.status(400).send({success:false, msg:error.message});
   }
 }
+export const getUsersEmailsByUpa = async (req, res) => {
+  const { upaId } = req.params;
+
+  try {
+    const users = await User.find({ upa: upaId });
+    const emails = users.map(user => user.email);
+    res.status(200).json({ emails });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error al obtener los correos electrónicos de los usuarios' });
+  }
+};
