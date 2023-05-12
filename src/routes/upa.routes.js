@@ -281,7 +281,7 @@ router.get('/userby/:upaId', upaCtrl.getUserByUpa)
 
 router.get('/frameby/:upaId', verifyToken, upaCtrl.getFrameByUpa)
 
-router.get('/frameby/:upaId', upaCtrl.getUsersEmailsByUpa)
+router.get('/emailby/:upaId', upaCtrl.getUsersEmailsByUpa)
 
 router.put('/:upaId', verifyToken, upaCtrl.editUPA)
 
