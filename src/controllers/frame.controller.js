@@ -29,6 +29,7 @@ exports.createData = async (req, res) => {
     Fn,
     D_Reg,
     Sensores,
+    Actuadores,
     CRC
   });
 
