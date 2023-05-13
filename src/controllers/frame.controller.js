@@ -10,26 +10,26 @@ import Upa from '../models/Upa'
 exports.createData = async (req, res) => {
 
   //const { NombreUpa, Type_Com, Dir_Esclavo, Funtion,Dire_Registro,Estacion_Meteorologica,CRC} = req.body;
-  const { NombreUpa, Type_Com, Dir_Esclavo, Funtion,Dire_Registro,CRC} = req.body;
+  const { idUPA, T_Com, D_Esc, Fn,D_Reg,CRC} = req.body;
 
   const Datos ={
   PH  : faker.random.number({ min: 15, max: 30 }),
-  Temperatura : faker.random.number({ min: 5, max: 8 }),
-  Conductividad_Electrica : faker.random.number({ min: 0, max: 100 }),
-  Nivel_Agua : faker.random.number({ min: 0, max: 100 }),
-  Turbidez : faker.random.number({ min: 0, max: 100 }),
-  Oxigeno_Disuelto : faker.random.number({ min: 0, max: 100 })
+  Temp : faker.random.number({ min: 5, max: 8 }),
+  C_Electrica : faker.random.number({ min: 0, max: 100 }),
+  N_Agua : faker.random.number({ min: 0, max: 100 }),
+  Tu : faker.random.number({ min: 0, max: 100 }),
+  O_Di : faker.random.number({ min: 0, max: 100 })
   };
   
 
   const newFrame = new Frame({
-    NombreUpa,
-    Type_Com,
-    Dir_Esclavo,
-    Funtion,
-    Dire_Registro,
+    idUPA,
+    T_Com,
+    D_Esc,
+    Fn,
+    D_Reg,
     //Estacion_Meteorologica,
-    Datos,
+    Sensores,
     CRC
   });
 
@@ -60,16 +60,18 @@ export const createFrame = async (req, res) => {
   res.json(newFrame);
 };
 
+
+
 export const createFrameDev = async (req, res) => {
   const newFrame = await Frame.create(req.body);
   console.log(newFrame);
   const crc = require('crc');
-  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Datos, Actuadores } = newFrame;
+  const { T_Com, D_Esc, Fn, D_Reg, Sensores, Actuadores } = newFrame;
   //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
-  const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
-  const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
+  const { PH, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
+  const { Alarmas, Recir, Alim, Ox } = Actuadores;
   console.log(newFrame);
-  const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
+  const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
   const result = crc16modbus.toString(16).toUpperCase();
   await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });

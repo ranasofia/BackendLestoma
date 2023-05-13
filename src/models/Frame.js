@@ -2,11 +2,11 @@ import mongoose, { Schema, model } from 'mongoose'
 
 const datosSchema = new mongoose.Schema({
     PH: Number,
-    Temperatura: Number,
-    Conductividad_Electrica: Number,
-    Nivel_Agua: Number,
-    Turbidez: Number,
-    Oxigeno_Disuelto: Number
+    Temp: Number,
+    C_Electrica: Number,
+    N_Agua: Number,
+    Tu: Number,
+    O_Dis: Number
 });
 /*const estationSchema = new mongoose.Schema({
 
@@ -20,20 +20,20 @@ const datosSchema = new mongoose.Schema({
 
 const actuatorsSchema = new mongoose.Schema({
     Alarmas: Number,
-    Recirculacion: Number,
-    Alimentacion: Number,
-    Oxigeno: Number
+    Recir: Number,
+    Alim: Number,
+    Ox: Number
 });
 
 const frameSchema = new mongoose.Schema({
-    NombreUpa:{ type: mongoose.Schema.Types.ObjectId, ref: "Upa"},
-    Type_Com: Number,
-    Dir_Esclavo: Number,
-    Funtion: String,
-    Dire_Registro: Number,
+    idUPA:{ type: mongoose.Schema.Types.ObjectId, ref: "Upa"},
+    T_Com: Number,
+    D_Esc: Number,
+    Fn: String,
+    D_Reg: Number,
     //Estacion_Meteorologica: estationSchema,
-    Datos: datosSchema,
-    Actuadores: actuatorsSchema,
+    Sensores: datosSchema,
+    Act: actuatorsSchema,
     CRC: String
 },
 {
