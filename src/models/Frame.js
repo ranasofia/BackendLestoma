@@ -7,8 +7,8 @@ const datosSchema = new mongoose.Schema({
     Nivel_Agua: Number,
     Turbidez: Number,
     Oxigeno_Disuelto: Number
-})
-const estationSchema = new mongoose.Schema({
+});
+/*const estationSchema = new mongoose.Schema({
 
     NombreUpa: String,
     Temperatura: String,
@@ -16,7 +16,7 @@ const estationSchema = new mongoose.Schema({
     Velocidad_Viento: Number() ,
     Dir_Viento:  Number() ,
     Lluvia: Number() 
-});
+});*/
 
 const actuatorsSchema = new mongoose.Schema({
     Alarmas: Number,
@@ -31,7 +31,7 @@ const frameSchema = new mongoose.Schema({
     Dir_Esclavo: Number,
     Funtion: String,
     Dire_Registro: Number,
-    Estacion_Meteorologica: estationSchema,
+    //Estacion_Meteorologica: estationSchema,
     Datos: datosSchema,
     Actuadores: actuatorsSchema,
     CRC: String

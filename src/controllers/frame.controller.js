@@ -8,10 +8,10 @@ import Upa from '../models/Upa'
 
 
 exports.createData = async (req, res) => {
-  // Obtener los datos enviados por el cliente
-  const { NombreUpa, Type_Com, Dir_Esclavo, Funtion,Dire_Registro,Estacion_Meteorologica,CRC} = req.body;
-  
-  // Generar valores aleatorios para temperatura, pH y nivel de agua
+
+  //const { NombreUpa, Type_Com, Dir_Esclavo, Funtion,Dire_Registro,Estacion_Meteorologica,CRC} = req.body;
+  const { NombreUpa, Type_Com, Dir_Esclavo, Funtion,Dire_Registro,CRC} = req.body;
+
   const Datos ={
   PH  : faker.random.number({ min: 15, max: 30 }),
   Temperatura : faker.random.number({ min: 5, max: 8 }),
@@ -28,7 +28,7 @@ exports.createData = async (req, res) => {
     Dir_Esclavo,
     Funtion,
     Dire_Registro,
-    Estacion_Meteorologica,
+    //Estacion_Meteorologica,
     Datos,
     CRC
   });
@@ -42,12 +42,14 @@ export const createFrame = async (req, res) => {
   const newFrame = await Frame.create(req.body);
   console.log(newFrame);
   const crc = require('crc');
-  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
-  const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
+ // const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
+  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Datos, Actuadores } = newFrame;
+ // const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
   const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
   console.log(newFrame);
-  const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
+  //const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
+  const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
   const result = crc16modbus.toString(16).toUpperCase();
   await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
@@ -62,12 +64,12 @@ export const createFrameDev = async (req, res) => {
   const newFrame = await Frame.create(req.body);
   console.log(newFrame);
   const crc = require('crc');
-  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Estacion_Meteorologica, Datos, Actuadores } = newFrame;
-  const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
+  const { Type_Com, Dir_Esclavo, Funtion, Dire_Registro, Datos, Actuadores } = newFrame;
+  //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Conductividad_Electrica, Nivel_Agua, Turbidez, Oxigeno_Disuelto } = Datos;
   const { Alarmas, Recirculacion, Alimentacion, Oxigeno } = Actuadores;
   console.log(newFrame);
-  const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${Temperatura}${Humedad}${Velocidad_Viento}${Dir_Viento}${Lluvia}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
+  const data = `${Type_Com}${Dir_Esclavo}${Funtion}${Dire_Registro}${PH}${Conductividad_Electrica}${Nivel_Agua}${Turbidez}${Oxigeno_Disuelto}${Alarmas}${Recirculacion}${Alimentacion}${Oxigeno}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
   const result = crc16modbus.toString(16).toUpperCase();
   await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
