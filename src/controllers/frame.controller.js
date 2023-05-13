@@ -393,7 +393,7 @@ export const getLastFrameByUpa = async (req, res) => {
         return res.status(404).json({ message: 'No se encontró la UPA.' });
       }
   
-      const lastFrame = await Frame.findOne({ NombreUpa: upa._id }).sort({ _id: -1 });
+      const lastFrame = await Frame.findOne({ idUPA: upa._id }).sort({ _id: -1 });
   
       res.status(200).json(lastFrame);
     } catch (error) {
@@ -411,7 +411,7 @@ export const getLastFrameByUpaDev = async (req, res) => {
       return res.status(404).json({ message: 'No se encontró la UPA.' });
     }
 
-    const lastFrame = await Frame.findOne({ NombreUpa: upa._id }).sort({ _id: -1 });
+    const lastFrame = await Frame.findOne({ idUPA: upa._id }).sort({ _id: -1 });
 
     res.status(200).json(lastFrame);
   } catch (error) {
@@ -430,7 +430,7 @@ export const getAllFrameByUpa = async (req, res) => {
         return res.status(404).json({ message: 'No se encontró la UPA.' });
       }
   
-      const frames = await Frame.find({ NombreUpa: upa._id });
+      const frames = await Frame.find({ idUPA: upa._id });
   
       res.status(200).json(frames);
     } catch (error) {
