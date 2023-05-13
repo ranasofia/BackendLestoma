@@ -29,7 +29,7 @@ exports.createData = async (req, res) => {
     Fn,
     D_Reg,
     Sensores,
-    Actuadores,
+    Act,
     CRC
   });
 
@@ -39,8 +39,8 @@ exports.createData = async (req, res) => {
 };
 
 export const createFrame = async (req, res) => {
-  const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Actuadores } = req.body;
-  if (!idUPA || !T_Com || !D_Esc || !Fn || !D_Reg || !Sensores || !Actuadores) {
+  const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Act } = req.body;
+  if (!idUPA || !T_Com || !D_Esc || !Fn || !D_Reg || !Sensores || !Act) {
     return res.status(400).json({ error: 'Todos los campos son requeridos' });
   }
   
@@ -50,7 +50,7 @@ export const createFrame = async (req, res) => {
   //const { T_Com, D_Esc, Fn, D_Reg, Sensores, Actuadores } = newFrame;
   //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
-  const { Alarmas, Recir, Alim, Ox } = Actuadores;
+  const { Alarmas, Recir, Alim, Ox } = Act;
   console.log(newFrame);
   const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
@@ -66,8 +66,8 @@ export const createFrame = async (req, res) => {
 
 
 export const createFrameDev = async (req, res) => {
-  const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Actuadores } = req.body;
-  if (!idUPA || !T_Com || !D_Esc || !Fn || !D_Reg || !Sensores || !Actuadores) {
+  const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Act } = req.body;
+  if (!idUPA || !T_Com || !D_Esc || !Fn || !D_Reg || !Sensores || !Act) {
     return res.status(400).json({ error: 'Todos los campos son requeridos' });
   }
   
@@ -77,7 +77,7 @@ export const createFrameDev = async (req, res) => {
   //const { T_Com, D_Esc, Fn, D_Reg, Sensores, Actuadores } = newFrame;
   //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
   const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
-  const { Alarmas, Recir, Alim, Ox } = Actuadores;
+  const { Alarmas, Recir, Alim, Ox } = Act;
   console.log(newFrame);
   const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
   const crc16modbus = crc.crc16modbus(Buffer.from(data));
