@@ -39,55 +39,64 @@ exports.createData = async (req, res) => {
 };
 
 export const createFrame = async (req, res) => {
-  const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Act } = req.body;
-  if (!idUPA || !T_Com || !D_Esc || !Fn || !D_Reg || !Sensores || !Act) {
-    return res.status(400).json({ error: 'Todos los campos son requeridos' });
-  }
+  try {
+     
   
-  const newFrame = await Frame.create(req.body);
-  console.log(newFrame);
-  const crc = require('crc');
-  //const { T_Com, D_Esc, Fn, D_Reg, Sensores, Actuadores } = newFrame;
-  //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
-  const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
-  const { Alarmas, Recir, Alim, Ox } = Act;
-  console.log(newFrame);
-  const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
-  const crc16modbus = crc.crc16modbus(Buffer.from(data));
-  const result = crc16modbus.toString(16).toUpperCase();
-  await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
+    const newFrame = await Frame.create(req.body);
+    console.log(newFrame);
+    const crc = require('crc');
+    const { T_Com, D_Esc, Fn, D_Reg, Sensores, Act } = newFrame;
+    //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
+    const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
+    const { Alarmas, Recir, Alim, Ox } = Act;
+    console.log(newFrame);
+    const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
+    const crc16modbus = crc.crc16modbus(Buffer.from(data));
+    const result = crc16modbus.toString(16).toUpperCase();
+    await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
 
-  newFrame.CRC = result;
+    newFrame.CRC = result;
 
-  console.log(result);
-  res.json(newFrame);
+    console.log(result);
+    res.json(newFrame);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al procesar la solicitud' });
+  }
 };
 
 
 
 export const createFrameDev = async (req, res) => {
-  const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Act } = req.body;
+  /*const {idUPA, T_Com, D_Esc, Fn, D_Reg,  Sensores, Act } = req.body;
   if (!idUPA || !T_Com || !D_Esc || !Fn || !D_Reg || !Sensores || !Act) {
     return res.status(400).json({ error: 'Todos los campos son requeridos' });
-  }
+  }*/
   
-  const newFrame = await Frame.create(req.body);
-  console.log(newFrame);
-  const crc = require('crc');
-  //const { T_Com, D_Esc, Fn, D_Reg, Sensores, Actuadores } = newFrame;
-  //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
-  const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
-  const { Alarmas, Recir, Alim, Ox } = Act;
-  console.log(newFrame);
-  const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
-  const crc16modbus = crc.crc16modbus(Buffer.from(data));
-  const result = crc16modbus.toString(16).toUpperCase();
-  await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
+  try {
+     
+  
+    const newFrame = await Frame.create(req.body);
+    console.log(newFrame);
+    const crc = require('crc');
+    const { T_Com, D_Esc, Fn, D_Reg, Sensores, Act } = newFrame;
+    //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
+    const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
+    const { Alarmas, Recir, Alim, Ox } = Act;
+    console.log(newFrame);
+    const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
+    const crc16modbus = crc.crc16modbus(Buffer.from(data));
+    const result = crc16modbus.toString(16).toUpperCase();
+    await Frame.findByIdAndUpdate(newFrame._id, { CRC: result }, { new: true });
 
-  newFrame.CRC = result;
+    newFrame.CRC = result;
 
-  console.log(result);
-  res.json(newFrame);
+    console.log(result);
+    res.json(newFrame);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al procesar la solicitud' });
+  }
 };
 
 
