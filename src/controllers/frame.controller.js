@@ -311,13 +311,13 @@ export const getDataReport = async (req, res, next) => {
       // Agregar las variables seleccionadas a la selección del usuario
       if (variables) {
         variables.forEach((variable) => {
-          seleccion[`Datos.${variable}`] = 1;
+          seleccion[`Sensores.${variable}`] = 1;
         });
       }
       seleccion["createdAt"] = 1;
   
       // Agregar la condición de filtro por nombreUpa si se proporciona
-      const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
+      const filtroNombreUpa = nombreUpa ? { "idUpa": nombreUpa } : {};
   
       // Realizar la consulta en la base de datos utilizando el rango de fechas, la selección de variables y el filtro por nombreUpa
       const datos = await Frame.find({
@@ -344,7 +344,7 @@ export const getDataReport = async (req, res, next) => {
         // Agregar cada variable seleccionada al objeto
         if (variables) {
           variables.forEach((variable) => {
-            obj[variable] = d.Datos[variable];
+            obj[variable] = d.Sensores[variable];
           });
         }
   
