@@ -121,7 +121,7 @@ export const deleteFrame = (req, res) => {
 }
 
 export const getFrame_DateVariables = async (req, res, next) => {
-    const { fechaInicio, fechaFin, variables, nombreUpa } = req.body;
+    const { fechaInicio, fechaFin, variables, idUpa } = req.body;
 
     // Crea un objeto de selección vacío
     const seleccion = {};
@@ -129,14 +129,14 @@ export const getFrame_DateVariables = async (req, res, next) => {
     // Agrega las variables seleccionadas a la selección del usuario
     if (variables) {
         variables.forEach(variable => {
-            seleccion[`Datos.${variable}`] = 1;
+            seleccion[`Sensores.${variable}`] = 1;
         });
     }
 
     seleccion['createdAt'] = 1;
 
     // Agrega la condición de filtro por nombreUpa si se proporciona
-    const filtroNombreUpa = nombreUpa ? { "NombreUpa": nombreUpa } : {};
+    const filtroNombreUpa = idUpa ? { "idUPA": idUpa } : {};
 
     // Realiza la consulta en  la base de datos utilizando el rango de fechas y la selección de variables
     Frame.find({
