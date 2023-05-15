@@ -2,6 +2,7 @@ import Upa from '../models/Upa'
 import User from '../models/User'
 import Frame from '../models/Frame'
 import config from '../config'
+import mongoose from "mongoose";
 
 const nodemailer = require("nodemailer");
 
@@ -164,7 +165,7 @@ export const getUsersEmailsByUpa = async (req, res) => {
 
   try {
 
-    const usersWithRole = await User.find({ roles: '645993329aaf246f8ce032b1' });
+    const usersWithRole = await User.find({ roles: "645993329aaf246f8ce032b1" });
     console.log(usersWithRole);
 
     const roleId = mongoose.Types.ObjectId("645993329aaf246f8ce032b1");
