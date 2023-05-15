@@ -294,7 +294,7 @@ export const getReport = async (req, res, next) => {
 
 export const getDataReport = async (req, res, next) => {
     try {
-      const { fechaInicio, fechaFin, variables, nombreUpa } = req.body;
+      const { fechaInicio, fechaFin, variables, idUpa } = req.body;
   
       // Validar los parámetros de entrada
       if (!fechaInicio || !fechaFin) {
@@ -317,7 +317,7 @@ export const getDataReport = async (req, res, next) => {
       seleccion["createdAt"] = 1;
   
       // Agregar la condición de filtro por nombreUpa si se proporciona
-      const filtroNombreUpa = nombreUpa ? { "idUpa": nombreUpa } : {};
+      const filtroNombreUpa = idUpa ? { "idUPA": idUpa } : {};
   
       // Realizar la consulta en la base de datos utilizando el rango de fechas, la selección de variables y el filtro por nombreUpa
       const datos = await Frame.find({
