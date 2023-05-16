@@ -287,7 +287,9 @@ router.get('/getLast', verifyToken, frameCtrl.getLast)
  *       500:
  *         description: Error al obtener la última trama vinculada a la UPA
  */
-router.get('/getLastFrameUpa/:upaId', verifyToken, frameCtrl.getLastFrameByUpa)
+router.get('/getLastFrameUpa/:upaId', verifyToken,frameCtrl.getLastFrameByUpa)
+
+router.get('/getLastFrameUpaDev/:upaId',frameCtrl.getLastFrameByUpa)
 
 /**
  * @swagger
