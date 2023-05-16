@@ -133,6 +133,8 @@ router.post('/createFrame', verifyToken, frameCtrl.createFrame);
 
 router.post('/createFrameDev',frameCtrl.createFrameDev);
 
+router.post('/createNewFrame',frameCtrl.createNewFrame);
+
 router.post('/obtener', verifyToken, frameCtrl.createData);
 
 /**

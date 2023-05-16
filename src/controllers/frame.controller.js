@@ -459,3 +459,14 @@ export const updateData = async (req, res, next) => {
     }
 
 }
+
+export const createNewFrame = async (req, res) => {
+  try {
+    const newFrame = await Frame.create(req.body);
+    console.log(newFrame);
+    res.json(newFrame);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al procesar la solicitud" });
+  }
+};

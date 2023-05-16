@@ -1,12 +1,18 @@
 import mongoose, { Schema, model } from 'mongoose'
 
+const SenActSchema = new mongoose.Schema({
+    p: Number,
+    n: String,
+    v: Number,
+    e: Number,
+})
+
 const datosSchema = new mongoose.Schema({
-    PH: Number,
-    Temp: Number,
-    C_Electrica: Number,
-    N_Agua: Number,
-    Tu: Number,
-    O_Dis: Number
+    S_1: SenActSchema,
+    S_2: SenActSchema,
+    S_3: SenActSchema,
+    S_4: SenActSchema,
+    S_5: SenActSchema
 });
 /*const estationSchema = new mongoose.Schema({
 
@@ -19,10 +25,11 @@ const datosSchema = new mongoose.Schema({
 });*/
 
 const actuatorsSchema = new mongoose.Schema({
-    Alarmas: Number,
-    Recir: Number,
-    Alim: Number,
-    Ox: Number
+    A_1: SenActSchema,
+    A_2: SenActSchema,
+    A_3: SenActSchema,
+    A_4: SenActSchema,
+    A_5: SenActSchema
 });
 
 const frameSchema = new mongoose.Schema({
@@ -32,13 +39,15 @@ const frameSchema = new mongoose.Schema({
     Fn: String,
     D_Reg: Number,
     //Estacion_Meteorologica: estationSchema,
-    Sensores: datosSchema,
+    Sen: datosSchema,
     Act: actuatorsSchema,
     CRC: String
 },
 {
     timestamps: true
 });
+
+
 
 const Frame = model("Frame", frameSchema);
 module.exports = Frame
