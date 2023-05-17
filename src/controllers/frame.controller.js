@@ -1,4 +1,5 @@
 import Frame from '../models/Frame'
+import Range from '../models/Range'
 const faker = require('faker');
 const mongoose = require('mongoose');
 const PDF = require('pdfkit-construct')
@@ -465,6 +466,17 @@ export const createNewFrame = async (req, res) => {
     const newFrame = await Frame.create(req.body);
     console.log(newFrame);
     res.json(newFrame);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al procesar la solicitud" });
+  }
+};
+
+export const createRange = async (req, res) => {
+  try {
+    const newRange = await Range.create(req.body);
+    console.log(newRange);
+    res.json(newRange);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al procesar la solicitud" });

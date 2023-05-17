@@ -2,8 +2,11 @@ import mongoose, { Schema, model } from 'mongoose'
 
 const SenActSchema = new mongoose.Schema({
     n: String,
-    v: Number
+    v: Number,
+    e: Number
 })
+
+
 
 const datosSchema = new mongoose.Schema({
     PH: Number,
@@ -50,6 +53,23 @@ const frameSchema = new mongoose.Schema({
     timestamps: true
 });
 
+
+const minMaxSchema = new mongoose.Schema({
+    n: Number,
+    m: Number
+});
+
+const rangeSchema = new mongoose.Schema({
+    PH: minMaxSchema,
+    Temp: minMaxSchema,
+    C_Electrica: minMaxSchema,
+    N_Agua: minMaxSchema,
+    Tu: minMaxSchema,
+    O_Dis: minMaxSchema,
+    S_1: minMaxSchema,
+    S_2: minMaxSchema
+
+});
 
 
 const Frame = model("Frame", frameSchema);
