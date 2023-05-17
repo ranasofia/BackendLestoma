@@ -482,3 +482,18 @@ export const createRange = async (req, res) => {
     res.status(500).json({ error: "Error al procesar la solicitud" });
   }
 };
+export const getLastRangeById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const range = await Range.findOne({}).sort({ _id: -1 }).limit(1).lean();
+    if (!range) {
+      return res.status(404).json({ message: 'No se encontró ningún rango.' });
+    }
+
+    res.status(200).json(range);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener el último rango por ID.' });
+  }
+};
