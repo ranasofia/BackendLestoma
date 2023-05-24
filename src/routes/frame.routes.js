@@ -211,6 +211,10 @@ router.get('/getAll', verifyToken, frameCtrl.getFrame)
 
 router.get('/getLastRange',frameCtrl.getLastRangeById)
 
+router.get('/getLastSensorRange',frameCtrl.getLatestSensorData)
+
+
+
 router.get('/getLast', verifyToken, frameCtrl.getLast)
 
 /**

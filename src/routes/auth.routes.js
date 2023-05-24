@@ -50,6 +50,8 @@ import * as authCtrl from '../controllers/auth.controllers'
  */
 router.post('/registre', authCtrl.registre)
 
+router.post('/registreP', authCtrl.registrePrueba)
+
 /**
  * Inicia sesión de un usuario en el sistema.
  * @openapi

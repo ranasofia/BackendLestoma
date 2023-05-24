@@ -361,6 +361,7 @@ export const getDataReport = async (req, res, next) => {
   };  
 
 
+
 export const getCRC = async (req, res) => {
 
     const crc = require('crc');
@@ -497,3 +498,31 @@ export const getLastRangeById = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener el último rango por ID.' });
   }
 };
+
+
+export const getLatestSensorData = async (req, res) => {
+  try {
+    const latestFrame = await Frame.findOne().sort({ createdAt: -1 }).exec();
+    const latestRange = await Range.findOne().exec();
+
+    const sensors = ['PH', 'Temp', 'C_Electrica', 'N_Agua', 'Tu', 'O_Dis', 'S_1', 'S_2'];
+    const result = [];
+
+    for (const sensor of sensors) {
+      const sensorData = {
+        name: sensor,
+        mean: latestFrame.Datos[sensor],
+        min: latestRange[sensor].n,
+        max: latestRange[sensor].m
+      };
+
+      result.push(sensorData);
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+

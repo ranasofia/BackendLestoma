@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 import config from '../config'
 import Role from '../models/Role';
 import Upa from '../models/Upa';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 
 export const registre = async (req, res) => {
     
@@ -184,4 +186,103 @@ export const getIdUserLogged = async (req, res) => {
     res.status(401).json({ message: 'Token inválido' });
   }
 };
+
+export const registrePrueba = async (req, res) => {
+  const { name, lastname, email, roles, upaId } = req.body;
+
+  // Validación de entradas
+  if (!name || !email || !upaId) {
+    return res.status(400).json({ message: 'Por favor proporcione todos los campos obligatorios' });
+  }
+
+  // Validación de correo electrónico
+  const user = await User.findOne({ email: email });
+  if (user) {
+    return res.status(400).json({ message: 'El correo electrónico ya está registrado' });
+  }
+
+  // Validación de existencia de upaId
+  const upa = await Upa.findById(upaId);
+  if (!upa) {
+    return res.status(400).json({ message: 'El upaId proporcionado no existe' });
+  }
+
+  // Generar una contraseña aleatoria
+  const generatedPassword = generateRandomPassword();
+
+  const newUser = new User({
+    name,
+    lastname,
+    email,
+    password: generatedPassword,
+    upa: upa._id
+  });
+
+  // Validación de roles
+  if (roles) {
+    const foundRoles = await Role.find({ id_rol: { $in: roles } });
+    if (foundRoles.length !== roles.length) {
+      return res.status(400).json({ message: 'Uno o más de los identificadores de rol proporcionados son inválidos' });
+    }
+    newUser.roles = foundRoles.map(role => role._id);
+  } else {
+    const role = await Role.findOne({ id_rol: 3 });
+    newUser.roles = [role._id];
+  }
+
+  const saveUser = await newUser.save();
+
+  // Enviar la contraseña al correo del usuario
+  try {
+    await sendPasswordByEmail(email, generatedPassword);
+  } catch (error) {
+    return res.status(500).json({ message: 'No se pudo enviar la contraseña por correo electrónico' });
+  }
+
+  const token = jwt.sign(
+    {
+      name: saveUser.name,
+      lastname: saveUser.lastname,
+      email: saveUser.email,
+      rol: saveUser.roles,
+      upa: saveUser.upa
+    },
+    config.SECRET,
+    {
+      expiresIn: 86400 // 1 day
+    }
+  );
+
+  res.status(200).json({ token });
+};
+
+// Función para generar una contraseña aleatoria
+function generateRandomPassword() {
+  const length = 10;
+  return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
+}
+
+// Función para enviar la contraseña al correo del usuario
+async function sendPasswordByEmail(email, password) {
+  // Configurar el transportador de correo electrónico (Nodemailer)
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'fishwebapp@gmail.com', // Reemplaza con tu dirección de correo electrónico
+      pass: 'iovejraqwwdhrguv' // Reemplaza con tu contraseña de correo electrónico
+    }
+  });
+
+  // Configurar el contenido del correo electrónico
+  const mailOptions = {
+    from: 'fishwebapp@gmail.com', // Reemplaza con tu dirección de correo electrónico
+    to: email,
+    subject: 'Contraseña de registro',
+    text: `Tu contraseña de registro es: ${password}`
+  };
+
+  return transporter.sendMail(mailOptions);
+};
+
+
   
