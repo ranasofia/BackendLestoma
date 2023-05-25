@@ -34,6 +34,7 @@ const actuatorsSchema = new mongoose.Schema({
     Recir: Number,
     Alim: Number,
     Ox: Number,
+    
 });
 
 const frameSchema = new mongoose.Schema({
@@ -43,7 +44,7 @@ const frameSchema = new mongoose.Schema({
     Fn: String,
     D_Reg: Number,
     //Estacion_Meteorologica: estationSchema,
-    Sensores: datosSchema,
+    Sen: datosSchema,
     Act: actuatorsSchema,
     CRC: String
 },
