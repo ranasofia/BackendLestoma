@@ -14,7 +14,9 @@ const rangeSchema = new mongoose.Schema({
     O_Dis: minMaxSchema,
     S_1: minMaxSchema,
     S_2: minMaxSchema
-
+},
+{
+    timestamps: true
 });
 
 

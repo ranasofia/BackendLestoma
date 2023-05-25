@@ -500,20 +500,38 @@ export const getLastRangeById = async (req, res) => {
 };
 
 
+
 export const getLatestSensorData = async (req, res) => {
   try {
-    const latestFrame = await Frame.findOne().sort({ createdAt: -1 }).exec();
-    const latestRange = await Range.findOne().exec();
+    const { upaId } = req.params;
 
-    const sensors = ['PH', 'Temp', 'C_Electrica', 'N_Agua', 'Tu', 'O_Dis', 'S_1', 'S_2'];
+    const latestFrame = await Frame.findOne({ NombreUpa: upaId }).sort({ createdAt: -1 }).exec();
+
+    const latestRange = await Range.findOne({}).sort({ createdAt: -1 }).exec();
+
+    const sensors = ['PH', 'Temp', 'C_Electrica', 'N_Agua', 'Tu', 'O_Dis'];
     const result = [];
 
     for (const sensor of sensors) {
+      let mean = null;
+
+      if (latestFrame && latestFrame.Sen && latestFrame.Sen[sensor]) {
+        mean = latestFrame.Sen[sensor];
+      }
+
+      let min = null;
+      let max = null;
+
+      if (latestRange && latestRange[sensor] && latestRange[sensor].n && latestRange[sensor].m) {
+        min = latestRange[sensor].n;
+        max = latestRange[sensor].m;
+      }
+
       const sensorData = {
         name: sensor,
-        mean: latestFrame.Datos[sensor],
-        min: latestRange[sensor].n,
-        max: latestRange[sensor].m
+        mean,
+        min,
+        max
       };
 
       result.push(sensorData);
@@ -525,4 +543,3 @@ export const getLatestSensorData = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
