@@ -34,8 +34,6 @@ const actuatorsSchema = new mongoose.Schema({
     Recir: Number,
     Alim: Number,
     Ox: Number,
-    A_1: SenActSchema,
-    A_2: SenActSchema
 });
 
 const frameSchema = new mongoose.Schema({
@@ -45,7 +43,7 @@ const frameSchema = new mongoose.Schema({
     Fn: String,
     D_Reg: Number,
     //Estacion_Meteorologica: estationSchema,
-    Sen: datosSchema,
+    Sensores: datosSchema,
     Act: actuatorsSchema,
     CRC: String
 },
@@ -66,8 +64,6 @@ const rangeSchema = new mongoose.Schema({
     N_Agua: minMaxSchema,
     Tu: minMaxSchema,
     O_Dis: minMaxSchema,
-    S_1: minMaxSchema,
-    S_2: minMaxSchema
 
 });
 
