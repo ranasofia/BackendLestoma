@@ -46,9 +46,9 @@ export const createFrame = async (req, res) => {
     const newFrame = await Frame.create(req.body);
     console.log(newFrame);
     const crc = require('crc');
-    const { T_Com, D_Esc, Fn, D_Reg, Sensores, Act } = newFrame;
+    const { T_Com, D_Esc, Fn, D_Reg, Sen, Act } = newFrame;
     //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
-    const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
+    const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sen;
     const { Alarmas, Recir, Alim, Ox } = Act;
     console.log(newFrame);
     const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
@@ -80,9 +80,9 @@ export const createFrameDev = async (req, res) => {
     const newFrame = await Frame.create(req.body);
     console.log(newFrame);
     const crc = require('crc');
-    const { T_Com, D_Esc, Fn, D_Reg, Sensores, Act } = newFrame;
+    const { T_Com, D_Esc, Fn, D_Reg, Sen, Act } = newFrame;
     //const { Temperatura, Humedad, Velocidad_Viento, Dir_Viento, Lluvia } = Estacion_Meteorologica;
-    const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sensores;
+    const { PH, Temp, C_Electrica, N_Agua, Tu, O_Dis } = Sen;
     const { Alarmas, Recir, Alim, Ox } = Act;
     console.log(newFrame);
     const data = `${T_Com}${D_Esc}${Fn}${D_Reg}${PH}${Temp}${C_Electrica}${N_Agua}${Tu}${O_Dis}${Alarmas}${Recir}${Alim}${Ox}`;
