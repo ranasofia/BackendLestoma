@@ -6,6 +6,7 @@ const minMaxSchema = new mongoose.Schema({
 });
 
 const rangeSchema = new mongoose.Schema({
+    idUPA:{ type: mongoose.Schema.Types.ObjectId, ref: "Upa"},
     PH: minMaxSchema,
     Temp: minMaxSchema,
     C_Electrica: minMaxSchema,
