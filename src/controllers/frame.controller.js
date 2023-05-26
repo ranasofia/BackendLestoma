@@ -4,6 +4,7 @@ const faker = require('faker');
 const mongoose = require('mongoose');
 const PDF = require('pdfkit-construct')
 import Upa from '../models/Upa' 
+import SensorData from '../models/DataSensor'
 
 
 
@@ -538,6 +539,22 @@ export const getLatestSensorData = async (req, res) => {
     }
 
     res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const createSensorData = async (req, res) => {
+  try {
+    const { idUPA, n, e } = req.body;
+    const newSensorData = new SensorData({
+      idUPA,
+      n,
+      e
+    });
+    const createdSensorData = await newSensorData.save();
+    res.status(201).json(createdSensorData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

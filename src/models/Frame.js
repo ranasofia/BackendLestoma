@@ -15,8 +15,7 @@ const datosSchema = new mongoose.Schema({
     N_Agua: Number,
     Tu: Number,
     O_Dis: Number,
-    S_1: SenActSchema,
-    S_2: SenActSchema
+    S_1: Number
 
 });
 /*const estationSchema = new mongoose.Schema({

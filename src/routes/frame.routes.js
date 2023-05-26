@@ -137,6 +137,8 @@ router.post('/createNewFrame',frameCtrl.createNewFrame);
 
 router.post('/createRange',frameCtrl.createRange);
 
+router.post('/createSensorData',frameCtrl.createSensorData);
+
 router.post('/obtener', verifyToken, frameCtrl.createData);
 
 /**
