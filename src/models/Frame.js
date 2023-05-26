@@ -43,7 +43,7 @@ const frameSchema = new mongoose.Schema({
     Fn: String,
     D_Reg: Number,
     //Estacion_Meteorologica: estationSchema,
-    Sen: datosSchema,
+    Sensores: datosSchema,
     Act: actuatorsSchema,
     CRC: String
 },
