@@ -6,7 +6,7 @@ import Upa from '../models/Upa';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
-export const registre = async (req, res) => {
+/*export const registre = async (req, res) => {
     
   const { name, lastname, email, password, roles, upaId} = req.body;
 
@@ -56,7 +56,7 @@ export const registre = async (req, res) => {
   res.status(200).json({token})
   
 }
-
+*/
 export const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -187,7 +187,7 @@ export const getIdUserLogged = async (req, res) => {
   }
 };
 
-export const registrePrueba = async (req, res) => {
+export const registre = async (req, res) => {
   const { name, lastname, email, roles, upaId } = req.body;
 
   // Validación de entradas
