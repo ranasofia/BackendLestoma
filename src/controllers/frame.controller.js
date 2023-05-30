@@ -516,8 +516,8 @@ export const getLatestSensorData = async (req, res) => {
     for (const sensor of sensors) {
       let mean = null;
 
-      if (latestFrame && latestFrame.Sen && latestFrame.Sen[sensor]) {
-        mean = latestFrame.Sen[sensor];
+      if (latestFrame && latestFrame.Sensores && latestFrame.Sensores[sensor]) {
+        mean = latestFrame.Sensores[sensor];
       }
 
       let min = null;
