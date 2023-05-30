@@ -139,6 +139,8 @@ router.post('/createRange',frameCtrl.createRange);
 
 router.post('/createSensorData',frameCtrl.createSensorData);
 
+router.get('/getSensorSettings/:upaId',frameCtrl.getLatestSettingSensor);
+
 router.post('/obtener', verifyToken, frameCtrl.createData);
 
 /**

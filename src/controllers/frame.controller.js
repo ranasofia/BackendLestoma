@@ -560,3 +560,20 @@ export const createSensorData = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const getLatestSettingSensor = async (req, res) => {
+  const upaId = req.params.upaId;
+  try {
+    const idUPA = await Upa.findById(upaId);
+    if (!idUPA) {
+      return res.status(404).json({ message: 'No se encontró la UPA.' });
+    }
+
+    const lastSetting = await SensorData.findOne({ idUPA: idUPA._id }).sort({ _id: -1 });
+
+    res.status(200).json(lastSetting);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error al obtener la última configuracion.'});
+  }
+};
