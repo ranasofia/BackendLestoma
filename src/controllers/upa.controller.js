@@ -172,7 +172,7 @@ export const getUsersEmailsByUpa = async (req, res) => {
     const users = await User.find({ upa: upaId, roles: roleId });
     console.log(users);
 
-    const emails = users.map(user => user.email);
+    const emails = users.map(user => user.name);
     res.status(200).json({ emails });
   } catch (err) {
     console.error(err);
