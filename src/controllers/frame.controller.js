@@ -626,7 +626,7 @@ console.log(req.body)
         // Agregar cada variable seleccionada a la fila de la tabla
         if (variables) {
           variables.forEach(variable => {
-            const value = d.Sen[variable];
+            const value = d.Sensores[variable];
             row[variable] = value;
             if (!columns.some(column => column.key === variable)) {
               columns.push({
