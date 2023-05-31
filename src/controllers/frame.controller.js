@@ -653,8 +653,8 @@ console.log(req.body)
 
       // Configurar la respuesta HTTP con el archivo plano
       res.set('Content-Disposition', 'attachment; filename="report.csv"');
-      res.set('Content-Type', 'text/plain');
-      res.send(txtContent);
+      res.set('Content-Type', 'text/csv');
+      res.send(csvContent);
     });
 };
 
