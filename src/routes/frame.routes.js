@@ -340,6 +340,8 @@ router.get('/getLastFrameUpaDev/:upaId',frameCtrl.getLastFrameByUpaDev)
 
 router.post('/getReport', frameCtrl.getReport)
 
+router.post('/getTXT', frameCtrl.getTXT) 
+
 /**
  * @swagger
  * /frame/getFrameVariablesDate:

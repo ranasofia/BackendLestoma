@@ -294,6 +294,7 @@ export const getReport = async (req, res, next) => {
     });
 };
 
+
 export const getDataReport = async (req, res, next) => {
     try {
       const { fechaInicio, fechaFin, variables, idUpa } = req.body;
@@ -577,3 +578,87 @@ export const getLatestSettingSensor = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener la última configuracion.'});
   }
 };
+
+export const getTXT = async (req, res, next) => {
+  let { fechaInicio, fechaFin, variables } = req.body;
+
+  fechaInicio = new Date(fechaInicio).toISOString();
+  fechaFin = new Date(fechaFin).toISOString();
+
+console.log(req.body)
+  // Crea un objeto de selección vacío
+  const seleccion = {};
+
+  // Agrega las variables seleccionadas a la selección del usuario
+  if (variables) {
+    variables.forEach(variable => {
+      seleccion[`Sensores.${variable}`] = 1;
+    });
+  }
+  seleccion['createdAt'] = 1;
+
+  // Realiza la consulta en la base de datos utilizando el rango de fechas y la selección de variables
+  Frame.find({
+    updatedAt: {
+      $gte: fechaInicio,
+      $lte: fechaFin
+    }
+  })
+    .select(seleccion) // Aplica la selección al resultado de la consulta
+    .exec((err, datos) => {
+      if (err) {
+        return next(err);
+      }
+
+      if (!datos || datos.length === 0) {
+        return res.status(404).send("No se encontraron datos");
+      }
+
+      const columns = [
+        { key: 'Fecha', label: 'Fecha', align: 'left' }
+      ];
+
+      const rows = datos.map(d => {
+        const row = {
+          Fecha: new Date(d.createdAt).toLocaleDateString('es-ES')
+        };
+
+        // Agregar cada variable seleccionada a la fila de la tabla
+        if (variables) {
+          variables.forEach(variable => {
+            const value = d.Sen[variable];
+            row[variable] = value;
+            if (!columns.some(column => column.key === variable)) {
+              columns.push({
+                key: variable,
+                label: variable,
+                align: 'left'
+              });
+            }
+          });
+        }
+
+        return row;
+      });
+
+      // Generar el contenido del archivo plano
+      let txtContent = '';
+      rows.forEach(row => {
+        columns.forEach(column => {
+          const value = row[column.key] || '';
+          txtContent += value + ',';
+        });
+        txtContent += '\n';
+      });
+
+      // Configurar la respuesta HTTP con el archivo plano
+      res.set('Content-Disposition', 'attachment; filename="report.txt"');
+      res.set('Content-Type', 'text/plain');
+      res.send(txtContent);
+    });
+};
+
+
+
+
+
