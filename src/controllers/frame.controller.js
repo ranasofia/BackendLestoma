@@ -642,13 +642,13 @@ console.log(req.body)
       });
 
       // Generar el contenido del archivo plano
-      let txtContent = '';
+      let csvContent = '';
       rows.forEach(row => {
         columns.forEach(column => {
           const value = row[column.key] || '';
-          txtContent += value + ',';
+          csvContent += value + ',';
         });
-        txtContent += '\n';
+        csvContent += '\n';
       });
 
       // Configurar la respuesta HTTP con el archivo plano
