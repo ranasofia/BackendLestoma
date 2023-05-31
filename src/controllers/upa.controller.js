@@ -160,11 +160,11 @@ export const sendEmail = async (req, res) => {
       res.status(400).send({success:false, msg:error.message});
   }
 }
+
 export const getUsersEmailsByUpa = async (req, res) => {
   const { upaId } = req.params;
 
   try {
-
     const usersWithRole = await User.find({ roles: "645993329aaf246f8ce032b1" });
     console.log(usersWithRole);
 
@@ -172,10 +172,13 @@ export const getUsersEmailsByUpa = async (req, res) => {
     const users = await User.find({ upa: upaId, roles: roleId });
     console.log(users);
 
-    const emails = users.map(user => user.name);
-    res.status(200).json({ emails });
+    const emails = users.map(user => user.email); // Cambio: Obtener el campo de correo electrónico en lugar del nombre
+    const usernames = users.map(user => user.name); // Agregar: Obtener los nombres de usuario
+
+    res.status(200).json({ emails, usernames }); // Cambio: Enviar tanto los correos electrónicos como los nombres de usuario en la respuesta
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error al obtener los correos electrónicos de los usuarios' });
   }
 };
+
